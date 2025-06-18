@@ -11,16 +11,46 @@
 ## MVP (Minimum Viable Product)
 
 **Timeline**: Weeks 1-6  
-**Goal**: Validate market demand with fastest possible launch  
-**Target**: 500+ downloads, 100+ early bird subscribers
+**Goal**: Validate market demand with fastest possible launch + deep user understanding  
+**Target**: 500+ downloads, 100+ early bird subscribers, comprehensive user segmentation data
 
 ### Core Features
 
-1. **Onboarding Flow** (3 screens max)
+1. **Enhanced Onboarding Flow** (5 screens)
 
-   - Platform selection questionnaire
-   - Pricing validation and early bird signup
-   - Account linking setup
+   #### Screen 1: Platform Selection
+
+   - **Question**: "Which platforms do you currently use for content creation?"
+   - **Subtitle**: _This helps me understand which platform integrations to prioritize_
+   - **Options**: Threads, Bluesky, Twitter/X, LinkedIn, Facebook, Instagram, TikTok, YouTube
+   - Data collection for platform prioritization
+
+   #### Screen 2: Posting Frequency
+
+   - **Question**: "How often do you post on these platforms?"
+   - **Subtitle**: _This helps me understand your content creation workflow_
+   - **Options**: Daily, Few times a week, Weekly, Few times a month
+   - Usage pattern analysis for feature development
+
+   #### Screen 3: Content Type Assessment
+
+   - **Question**: "What type of content do you primarily create?"
+   - **Subtitle**: _This helps me build the right tools for your content workflow_
+   - **Options**: Text posts, Image content, Video content, Business content, Creative content, News & commentary, Brand/Marketing, Personal brand
+   - Creator persona identification and feature targeting
+
+   #### Screen 4: Content Creation Pain Points
+
+   - **Question**: "What's your biggest challenge with content creation?"
+   - **Subtitle**: _This helps me focus on solving your most important problems first_
+   - **Options**: Time management, Consistency, Content ideas, Writing quality, Formatting, Growth, Strategy, Tools
+   - Problem validation and solution prioritization
+
+   #### Screen 5: Value Proposition & Pricing
+
+   - Personalized messaging based on previous answers
+   - Early bird offer with targeted benefits
+   - Premium tier validation
 
 2. **Account Management**
 
@@ -41,14 +71,43 @@
    - Account preferences
    - Early bird offer access
    - Notification settings
+   - Onboarding preference updates
 
 ### Technical Foundation
 
 - SwiftUI architecture (iOS 15+)
-- UserDefaults for basic storage
+- SwiftData for onboarding preferences and user segmentation
+- UserDefaults for basic settings
 - OAuth 2.0 for platform authentication
 - Threads API integration
 - Bluesky AT Protocol integration
+
+### Enhanced Analytics & User Segmentation
+
+#### Content Creator Personas (Based on Onboarding Data)
+
+1. **Text-First Creators** (40-50% target)
+
+   - Primary platforms: Twitter/X, LinkedIn, Threads
+   - Pain points: Time management, writing quality
+   - Phase 1.5 priority: AI writing assistant, formatting rules
+
+2. **Visual Content Creators** (25-35% target)
+
+   - Primary platforms: Instagram, Facebook, LinkedIn
+   - Pain points: Formatting, consistency
+   - Phase 1.5 priority: Media editing, templates
+
+3. **Video Content Creators** (15-25% target)
+
+   - Primary platforms: TikTok, Instagram, YouTube
+   - Pain points: Time management, repurposing content
+   - Phase 1.5 priority: Video editing, auto-cropping
+
+4. **Business/Professional** (20-30% target)
+   - Primary platforms: LinkedIn, Facebook, Twitter/X
+   - Pain points: Strategy, consistency, growth
+   - Phase 1.5 priority: Scheduling, analytics, team features
 
 ### Monetization
 
@@ -61,18 +120,14 @@
 ## Phase 1.5 (Enhanced Core Features)
 
 **Timeline**: Weeks 7-14 (post-MVP)  
-**Goal**: User retention and premium tier launch  
-**Target**: 30% user retention, Twitter/X integration launch
+**Goal**: User retention and premium tier launch based on user segments  
+**Target**: 30% user retention, Twitter/X integration launch, segment-specific feature adoption
 
-### New Features
+### Personalized Feature Development (Based on MVP Onboarding Data)
 
-1. **Twitter/X Integration** (Premium Launch)
+#### Priority 1: Text-First Creators (Largest Segment)
 
-   - Full Twitter/X API integration
-   - Premium tier activation
-   - Early bird subscriber conversion
-
-2. **AI-Powered Writing Assistant**
+1. **AI-Powered Writing Assistant**
 
    - Content generation from prompts
    - Tone adjustment (professional, casual, engaging, etc.)
@@ -81,8 +136,7 @@
    - Grammar and spelling corrections
    - Emoji and hashtag suggestions
 
-3. **Content Formatting Rules Engine**
-
+2. **Content Formatting Rules Engine**
    - Custom formatting templates per platform
    - User-defined content structure rules
    - Automatic content adaptation based on rules
@@ -90,13 +144,22 @@
    - Character limit optimization
    - CTA (Call-to-Action) insertion rules
 
-4. **Smart Content Templates**
+#### Priority 2: All Segments
 
+3. **Twitter/X Integration** (Premium Launch)
+
+   - Full Twitter/X API integration
+   - Premium tier activation
+   - Early bird subscriber conversion
+
+4. **Smart Content Templates**
    - AI-generated template suggestions
    - Industry-specific templates (fitness, food, tech, etc.)
    - Performance-based template recommendations
    - Custom template creation with AI assistance
    - Template sharing and marketplace
+
+#### Priority 3: Visual Content Creators
 
 5. **Media Upload & Management**
 
@@ -109,13 +172,14 @@
    - Media preview and organization
 
 6. **Enhanced Media Management**
-
    - Advanced image editing tools (filters, adjustments, effects)
    - AI-powered image optimization
    - Stock photo integration (premium feature)
    - Alt text generation for accessibility
    - Media library with search and tags
    - Bulk media operations
+
+#### Priority 4: Business/Professional Creators
 
 7. **Draft Management**
 
@@ -148,12 +212,39 @@
 
 ### User Experience Improvements
 
-- Enhanced onboarding based on user feedback
+- Personalized onboarding based on user feedback and segments
 - Improved error handling and user messaging
 - Performance optimizations
 - Accessibility improvements
 - **Privacy-focused data management** (local-first approach)
 - **Seamless iCloud sync** for personal content
+- **Segment-specific UI adaptations** based on creator type
+
+### Feature Adoption Targets by Segment
+
+#### Text-First Creators
+
+- 80% adoption of AI writing assistant
+- 60% creation of custom formatting rules
+- 70% use of content templates
+
+#### Visual Content Creators
+
+- 90% media upload usage
+- 50% advanced editing tool adoption
+- 40% stock photo integration usage
+
+#### Video Content Creators
+
+- 85% video upload usage
+- 60% auto-cropping feature adoption
+- 45% video template usage
+
+#### Business/Professional
+
+- 75% draft management adoption
+- 50% analytics feature usage
+- 65% scheduling interest (Phase 2 preparation)
 
 ---
 
@@ -167,9 +258,10 @@
   - Draft content and notes
   - AI writing prompts and responses
   - Custom formatting rules and templates
-  - User preferences and settings
+  - User preferences and settings (including onboarding responses)
   - Content history and personal analytics
   - Brand guidelines and voice settings
+  - Creator persona and segment data
 
 **Benefits**:
 
@@ -178,6 +270,7 @@
 - Fast local access and synchronization
 - Apple's privacy-by-design architecture
 - No server costs for private data storage
+- Personalized experience without data sharing
 
 ### Phase 2: Hybrid Approach for Scheduling
 
@@ -232,7 +325,7 @@ Shared Content → Team Supabase Workspace → Role-Based Access → Real-time S
 
 **Timeline**: Months 5-8  
 **Goal**: Transform from posting tool to content management platform  
-**Target**: 5,000+ users, team collaboration features
+**Target**: 5,000+ users, team collaboration features, segment-specific retention improvements
 
 ### Scheduling Features
 
@@ -242,11 +335,12 @@ Shared Content → Team Supabase Workspace → Role-Based Access → Real-time S
    - Drag & drop scheduling interface
    - Calendar color coding by platform
    - Bulk scheduling capabilities
+   - Segment-specific calendar views
 
 2. **Advanced Scheduling**
 
    - Recurring post templates
-   - Optimal posting time suggestions (AI-powered)
+   - Optimal posting time suggestions (AI-powered, segment-specific)
    - Queue management system
    - Time zone management for global posting
 
@@ -256,7 +350,7 @@ Shared Content → Team Supabase Workspace → Role-Based Access → Real-time S
    - Posting conflict resolution
    - Queue analytics and optimization
 
-### Team Collaboration
+### Team Collaboration (Business/Professional Focus)
 
 1. **Multi-User Support**
 
@@ -292,6 +386,7 @@ Shared Content → Team Supabase Workspace → Role-Based Access → Real-time S
    - Audience insights and demographics
    - Engagement rate optimization
    - ROI tracking and reporting
+   - Segment-specific analytics dashboards
 
 ---
 
@@ -396,7 +491,7 @@ Shared Content → Team Supabase Workspace → Role-Based Access → Real-time S
 **Goal**: All-in-one content creation powerhouse  
 **Target**: 20,000+ users across all platforms, video editing capabilities
 
-### Video Editing Platform
+### Video Editing Platform (Video Creator Focus)
 
 1. **Core Video Editor**
 
@@ -437,7 +532,7 @@ Shared Content → Team Supabase Workspace → Role-Based Access → Real-time S
 
 1. **Content Ideas & AI**
 
-   - AI-powered content suggestions
+   - AI-powered content suggestions (segment-specific)
    - Trending topic recommendations
    - Content gap analysis
    - Competitor content insights
@@ -463,17 +558,19 @@ Shared Content → Team Supabase Workspace → Role-Based Access → Real-time S
 
 - SwiftUI + MVVM architecture
 - Basic API integrations
-- Local data storage
+- SwiftData for onboarding and user preferences
+- UserDefaults for basic settings
 - OAuth authentication
 
 ### Phase 1.5 Enhancements
 
 - **SwiftData + CloudKit implementation** (Private user data sync)
-- **iCloud Sync for drafts, notes, and AI content**
+- **iCloud Sync for drafts, notes, AI content, and user segments**
 - **PhotoKit and media processing integration**
 - Advanced API management
 - **AI/ML Services Integration** (OpenAI GPT-4, Claude API)
 - **Content Rules Engine** (Custom formatting logic)
+- **Personalization Engine** (Based on onboarding segments)
 - Error handling and retry logic
 - Performance monitoring
 - **Privacy-first data architecture**
@@ -487,6 +584,7 @@ Shared Content → Team Supabase Workspace → Role-Based Access → Real-time S
 - Advanced analytics framework
 - Push notification system
 - **Privacy-compliant scheduling pipeline**
+- **Segment-based feature delivery**
 
 ### Phase 2.5 Advanced Features
 
@@ -525,7 +623,7 @@ Shared Content → Team Supabase Workspace → Role-Based Access → Real-time S
 
 ### Phase 2 (Months 5-8)
 
-✅ **Extended Platforms** (Based on user demand)
+✅ **Extended Platforms** (Based on user demand and segments)
 
 - Instagram (Basic Display API)
 - Pinterest (API v5)
@@ -547,29 +645,57 @@ Shared Content → Team Supabase Workspace → Role-Based Access → Real-time S
 ### MVP Metrics
 
 - **Downloads**: 500+ in first month
-- **Onboarding**: 70% completion rate
+- **Onboarding**: 70% completion rate across all 5 screens
 - **Account Connections**: 60% of users connect ≥1 platform
 - **Early Bird Signups**: 100+ subscribers
 - **App Store Rating**: 4.0+ stars
+- **User Segmentation**: Clear distribution across creator personas
+- **Pain Point Validation**: Top 3 pain points identified with 80%+ consistency
+
+### Enhanced MVP Analytics
+
+#### Onboarding Completion by Screen
+
+- Screen 1 (Platform Selection): 85% completion
+- Screen 2 (Posting Frequency): 80% completion
+- Screen 3 (Content Type): 75% completion
+- Screen 4 (Pain Points): 70% completion
+- Screen 5 (Pricing): 70% completion
+
+#### User Segment Distribution Targets
+
+- Text-First Creators: 40-50%
+- Visual Content Creators: 25-35%
+- Video Content Creators: 15-25%
+- Business/Professional: 20-30%
+
+#### Pain Point Validation Targets
+
+- Time Management: 60%+ selection rate
+- Consistency: 40%+ selection rate
+- Writing Quality: 35%+ selection rate (Text creators)
+- Formatting: 50%+ selection rate (Visual creators)
 
 ### Phase 1.5 Metrics
 
-- **User Retention**: 30% after 30 days
+- **User Retention**: 30% after 30 days (overall), 40%+ for engaged segments
 - **Premium Conversion**: 25% of early bird list
 - **Daily Active Users**: 200+
 - **Posts Published**: 1,000+ per week
-- **Media Posts**: 70% of posts include images/video
-- **AI Feature Adoption**: 60% use AI writing assistant
-- **Custom Rules Usage**: 40% create formatting rules
-- **Content Quality Score**: Average 8/10 (AI-measured)
+- **Segment-Specific Adoption**:
+  - AI Writing Assistant: 80% (Text creators), 40% (others)
+  - Media Upload: 90% (Visual creators), 60% (others)
+  - Formatting Rules: 70% (Text creators), 30% (others)
+- **Feature Request Alignment**: 80%+ of requests match onboarding segments
 
 ### Phase 2 Metrics
 
 - **Total Users**: 5,000+
-- **Team Users**: 500+ teams
+- **Team Users**: 500+ teams (Business segment focus)
 - **Monthly Revenue**: $10,000+
 - **Content Scheduled**: 10,000+ posts/month
 - **User Retention**: 45% after 30 days
+- **Segment Retention**: 55%+ for Business users, 40%+ for others
 
 ### Phase 2.5 Metrics
 
@@ -579,15 +705,17 @@ Shared Content → Team Supabase Workspace → Role-Based Access → Real-time S
 - **Advanced Features Usage**: 60% use multi-column layouts
 - **Cross-Platform Sync**: 95% successful sync rate
 - **User Retention**: 50% after 30 days (improved with better workflows)
+- **Creator Type Distribution**: Maintained across all platforms
 
 ### Phase 3 Metrics
 
 - **Total Users**: 20,000+ across all platforms
-- **Video Users**: 4,000+ creating videos
+- **Video Users**: 4,000+ creating videos (Video creator segment growth)
 - **Monthly Revenue**: $75,000+
 - **Market Position**: Top 5 creator tools
 - **User Retention**: 65% after 30 days
 - **Cross-Platform Usage**: 35% actively use multiple devices
+- **Segment Satisfaction**: 80%+ satisfaction across all creator types
 
 ---
 
@@ -601,18 +729,20 @@ Shared Content → Team Supabase Workspace → Role-Based Access → Real-time S
 - **Data Privacy**: Ensure hybrid architecture maintains user privacy
 - **Background Processing**: Reliable scheduling with Supabase workers
 - **iCloud Sync Conflicts**: Handle SwiftData synchronization edge cases
+- **Segment Data Management**: Ensure onboarding data remains private and secure
 
 ### Business Risks
 
-- **Competition**: Focus on unique value proposition (mobile-first, creator-focused)
-- **User Acquisition**: Build strong community, leverage word-of-mouth
-- **Revenue**: Diversify revenue streams, validate pricing early
+- **Competition**: Focus on unique value proposition (mobile-first, creator-focused, personalized)
+- **User Acquisition**: Build strong community, leverage word-of-mouth, segment-specific marketing
+- **Revenue**: Diversify revenue streams, validate pricing early, segment-based pricing strategies
 
 ### Product Risks
 
-- **Feature Creep**: Stick to roadmap, user-driven prioritization
+- **Feature Creep**: Stick to roadmap, user-driven and segment-driven prioritization
 - **Technical Debt**: Regular refactoring, maintain code quality
-- **User Feedback**: Continuous user research, rapid iteration
+- **User Feedback**: Continuous user research, rapid iteration, segment-specific feedback loops
+- **Segment Bias**: Ensure all creator types receive value, not just largest segments
 
 ---
 
@@ -622,22 +752,25 @@ Shared Content → Team Supabase Workspace → Role-Based Access → Real-time S
 
 - **Development**: 1 iOS developer (full-time)
 - **Design**: 1 UI/UX designer (part-time)
+- **Analytics**: Basic onboarding analytics setup
 - **Timeline**: 6 weeks
-- **Budget**: API costs, App Store fees, basic infrastructure
+- **Budget**: API costs, App Store fees, basic infrastructure, analytics tools
 
 ### Phase 1.5
 
 - **Development**: 1-2 iOS developers, 1 backend developer
 - **AI Integration**: AI/ML specialist or API integration
+- **Data Analysis**: Part-time data analyst for segment insights
 - **Timeline**: 8 weeks (includes media processing features)
-- **Budget**: Premium API access, AI service costs, media processing libraries, enhanced infrastructure
+- **Budget**: Premium API access, AI service costs, media processing libraries, enhanced infrastructure, analytics platform
 
 ### Phase 2
 
 - **Development**: 2 iOS developers, 1 backend developer
 - **Product**: 1 product manager
+- **Data**: 1 data analyst (segment behavior and feature adoption)
 - **Timeline**: 4 months
-- **Budget**: Team collaboration infrastructure, analytics tools
+- **Budget**: Team collaboration infrastructure, analytics tools, advanced backend services
 
 ### Phase 2.5
 
@@ -656,54 +789,90 @@ Shared Content → Team Supabase Workspace → Role-Based Access → Real-time S
 
 ---
 
+## Segment-Specific Marketing Strategy
+
+### Text-First Creators
+
+- **Channels**: Twitter/X, LinkedIn, writing communities
+- **Messaging**: "Write once, reach everywhere"
+- **Features**: AI writing assistant, formatting automation
+- **Influencers**: Writers, bloggers, thought leaders
+
+### Visual Content Creators
+
+- **Channels**: Instagram, Pinterest, design communities
+- **Messaging**: "Beautiful content, effortless posting"
+- **Features**: Media editing, platform optimization
+- **Influencers**: Photographers, graphic designers, artists
+
+### Video Content Creators
+
+- **Channels**: TikTok, YouTube, video creator communities
+- **Messaging**: "Repurpose videos across all platforms"
+- **Features**: Video editing, auto-cropping, templates
+- **Influencers**: YouTubers, TikTok creators, video editors
+
+### Business/Professional
+
+- **Channels**: LinkedIn, business publications, marketing communities
+- **Messaging**: "Professional content management made simple"
+- **Features**: Team collaboration, scheduling, analytics
+- **Influencers**: Marketing professionals, social media managers, agencies
+
+---
+
 ## Next Steps
 
 ### Immediate Actions (Week 1)
 
-1. Finalize MVP feature scope
-2. Set up development environment
+1. Finalize enhanced MVP feature scope with onboarding flow
+2. Set up development environment with SwiftData implementation
 3. Begin API integration research
-4. Create initial UI wireframes
-5. Set up project management tools
+4. Create initial UI wireframes for 5-screen onboarding
+5. Set up project management tools and analytics framework
 
 ### Month 1 Goals
 
-1. Complete MVP development
-2. Conduct user testing with beta group
+1. Complete MVP development with enhanced onboarding
+2. Conduct user testing with beta group across different creator types
 3. Prepare App Store submission
-4. Launch early bird marketing campaign
-5. Gather initial user feedback
+4. Launch early bird marketing campaign with segment-specific messaging
+5. Gather initial user feedback and segment validation
 
 ### Quarter 1 Objectives (Months 1-3)
 
-1. Successfully launch MVP
-2. Achieve initial user base targets
-3. Validate premium pricing model
-4. Complete Phase 1.5 development
-5. Establish feedback and iteration cycle
+1. Successfully launch MVP with comprehensive user segmentation
+2. Achieve initial user base targets across all creator types
+3. Validate premium pricing model and segment preferences
+4. Complete Phase 1.5 development based on segment priorities
+5. Establish feedback and iteration cycle with segment-specific insights
 
 ### Quarter 2 Objectives (Months 4-6)
 
-1. Launch Phase 2 scheduling features
+1. Launch Phase 2 scheduling features with business segment focus
 2. Achieve team collaboration adoption
 3. Reach 5,000+ user milestone
-4. Validate scheduling workflow
+4. Validate scheduling workflow across segments
 5. Prepare for multi-platform expansion
 
 ### Quarter 3 Objectives (Months 7-9)
 
 1. Complete Phase 2.5 multi-platform rollout
 2. Achieve 20% non-iPhone device adoption
-3. Optimize cross-platform workflows
+3. Optimize cross-platform workflows for all creator types
 4. Reach 8,000+ user milestone
-5. Begin Phase 3 video editing development
+5. Begin Phase 3 video editing development (video creator focus)
 
 ### Quarter 4 Objectives (Months 10-12)
 
 1. Launch Phase 3 video editing features
 2. Establish market position as complete creator suite
-3. Achieve 20,000+ users across all platforms
+3. Achieve 20,000+ users across all platforms and creator types
 4. Reach $75,000+ monthly recurring revenue
-5. Plan international expansion and scaling
+5. Plan international expansion and scaling with segment-specific approaches
 
-This roadmap provides a clear path from MVP to full-featured creator platform while maintaining focus on user validation and sustainable growth.
+## Conclusion
+
+This enhanced roadmap provides a clear path from MVP to full-featured creator platform while maintaining focus on user validation, comprehensive user understanding, and sustainable growth. The enhanced onboarding flow creates deep user insights that drive personalized feature development and segment-specific product decisions.
+
+By understanding creator types, pain points, and platform preferences from day one, Diggie can build features that truly match user needs and create a more engaging, valuable experience for each creator segment. This data-driven approach ensures product-market fit across multiple creator personas while maintaining a unified, cohesive platform vision.
