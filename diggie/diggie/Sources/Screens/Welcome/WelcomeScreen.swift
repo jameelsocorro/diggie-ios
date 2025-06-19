@@ -28,16 +28,19 @@ struct WelcomeScreen: View {
             VStack(spacing: 0) {
                 Spacer()
                 
-                // Logo section
+                // Logo section with slide up + fade animation
                 Image("LogoFull")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 100, height: 100)
                     .accessibilityLabel("Diggie Logo with title")
+                    .opacity(viewModel.logoVisible ? 1 : 0)
+                    .offset(y: viewModel.logoVisible ? 0 : 30)
+                    .scaleEffect(viewModel.logoVisible ? 1 : 0.8)
                 
                 Spacer()
                 
-                // Value proposition section
+                // Value proposition section with slide left + fade animation
                 VStack(alignment: .leading, spacing: 4) {
                     Text("One post.")
                         .font(.largeTitle.weight(.bold))
@@ -53,9 +56,11 @@ struct WelcomeScreen: View {
                 .accessibilityElement(children: .combine)
                 .accessibilityLabel("One post. Everywhere. Instantly.")
                 .accessibilityHint("Diggie's value proposition: post to multiple platforms at once")
+                .opacity(viewModel.taglineVisible ? 1 : 0)
+                .offset(x: viewModel.taglineVisible ? 0 : -50)
                 
                 
-                // CTA Button
+                // CTA Button with slide up + fade animation
                 Button(action: {
                     viewModel.handleCTATap()
                 }) {
@@ -68,6 +73,7 @@ struct WelcomeScreen: View {
                 }
                 .accessibilityLabel("Try it for free")
                 .accessibilityHint("Tap to start using Diggie")
+                .opacity(viewModel.ctaButtonVisible ? 1 : 0)
                 
                 Spacer()
                     .frame(height: 24)
@@ -75,6 +81,9 @@ struct WelcomeScreen: View {
             .padding(.horizontal, 22)
         }
         .supportsDynamicType()
+        .onAppear {
+            viewModel.startAnimations()
+        }
     }
 }
 

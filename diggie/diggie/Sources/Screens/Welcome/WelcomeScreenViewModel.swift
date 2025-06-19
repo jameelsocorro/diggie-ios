@@ -13,6 +13,11 @@ import Observation
 @MainActor
 final class WelcomeScreenViewModel {
     
+    /// Animation states for different elements
+    var logoVisible = false
+    var taglineVisible = false
+    var ctaButtonVisible = false
+    
     /// Callback to handle CTA button tap
     private let onCTATap: () -> Void
     
@@ -22,8 +27,48 @@ final class WelcomeScreenViewModel {
         self.onCTATap = onCTATap
     }
     
-    /// Handle the CTA button tap
+    /// Start the welcome screen animations with haptic feedback triggered on start
+    func startAnimations() {
+        // Schedule haptic feedback for when logo animation starts
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            let impactFeedback = UIImpactFeedbackGenerator(style: .soft)
+            impactFeedback.impactOccurred()
+        }
+        
+        // Animate logo first
+        withAnimation(.easeOut(duration: 0.8).delay(0.3)) {
+            logoVisible = true
+        }
+        
+        // Schedule haptic feedback for when tagline animation starts
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+            let impactFeedback = UIImpactFeedbackGenerator(style: .soft)
+            impactFeedback.impactOccurred()
+        }
+        
+        // Animate tagline second
+        withAnimation(.easeOut(duration: 0.8).delay(0.8)) {
+            taglineVisible = true
+        }
+        
+        // Schedule haptic feedback for when CTA button animation starts
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
+            let impactFeedback = UIImpactFeedbackGenerator(style: .soft)
+            impactFeedback.impactOccurred()
+        }
+        
+        // Animate CTA button last
+        withAnimation(.easeOut(duration: 0.6).delay(1.3)) {
+            ctaButtonVisible = true
+        }
+    }
+    
+    /// Handle the CTA button tap with haptic feedback
     func handleCTATap() {
+        // Trigger button tap haptic feedback
+        let impactFeedback = UIImpactFeedbackGenerator(style: .medium)
+        impactFeedback.impactOccurred()
+        
         // Execute the callback
         onCTATap()
     }
