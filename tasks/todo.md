@@ -43,8 +43,9 @@
 - Applied gradient background matching the mockup
 - Added proper navigation structure for future expansion
 - Enhanced with smooth animations using SwiftUI's withAnimation
-- Integrated UIImpactFeedbackGenerator for haptic feedback
+- Optimized haptic feedback with pre-prepared UIImpactFeedbackGenerator instances
 - Staged animations with delays for professional presentation flow
+- Fixed performance lag by reusing feedback generators instead of creating new ones
 
 ## Review
 
