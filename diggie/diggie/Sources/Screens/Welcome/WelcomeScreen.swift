@@ -29,30 +29,22 @@ struct WelcomeScreen: View {
                 Spacer()
                 
                 // Logo section
-                VStack(spacing: 16) {
-                    Image("Logo")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 80, height: 80)
-                        .accessibilityLabel("Diggie Logo")
-                    
-                    Text("Diggie")
-                        .font(.largeTitle)
-                        .fontWeight(.medium)
-                        .foregroundColor(.white)
-                        .accessibilityLabel("Diggie")
-                }
+                Image("LogoFull")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 100, height: 100)
+                    .accessibilityLabel("Diggie Logo with title")
                 
                 Spacer()
                 
-                                // Value proposition section
+                // Value proposition section
                 VStack(alignment: .leading, spacing: 4) {
                     Text("One post.")
-                        .font(.system(size: 32, weight: .bold))
+                        .font(.largeTitle.weight(.bold))
                         .foregroundColor(.white)
                     
                     Text("Everywhere. Instantly.")
-                        .font(.system(size: 18, weight: .medium))
+                        .font(.title2.weight(.bold))
                         .foregroundColor(.gray)
                         .opacity(0.8)
                 }
@@ -68,7 +60,7 @@ struct WelcomeScreen: View {
                     viewModel.handleCTATap()
                 }) {
                     Text("Try it for free")
-                        .font(.system(size: 18, weight: .semibold))
+                        .font(.body.weight(.medium))
                         .foregroundColor(.black)
                         .frame(maxWidth: .infinity, maxHeight: 50)
                         .background(Color.white)
@@ -78,7 +70,7 @@ struct WelcomeScreen: View {
                 .accessibilityHint("Tap to start using Diggie")
                 
                 Spacer()
-                    .frame(height: 16)
+                    .frame(height: 24)
             }
             .padding(.horizontal, 22)
         }
