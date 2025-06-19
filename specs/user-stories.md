@@ -1,5 +1,7 @@
 # Diggie MVP - User Stories & Actionable Steps
 
+I recommend checking the @.cursorrules for guidelines
+
 ## Primary User Story
 
 **As a content creator**, I want to write once and post to multiple social platforms instantly, so I can save time and reach my audience everywhere without switching between apps.
@@ -8,24 +10,27 @@
 
 ## User Journey Breakdown
 
-### Epic 1: App Discovery & Launch
+### Epic 1: Welcome Experience
 
-**User Story**: As a new user, I want to understand what Diggie offers immediately upon opening the app.
+#### Welcome Screen (@specs/ui-mockups/welcome.png)
 
-#### Actionable Steps:
+**User Story**: As a new user, I want to understand the value proposition and have a clear way to get started.
 
-1. **Launch Screen (Image 10)**
-   - Display Diggie logo with gradient background
-   - Show tagline: "One post. Everywhere. Instantly."
-   - Present "Try it for free" CTA button
-   - Auto-transition to onboarding after 2-3 seconds or user tap
+##### Actionable Steps:
 
-#### Acceptance Criteria:
+1. Display Diggie logo (Image name is "Logo") with gradient background (consistent with launch)
+2. Show tagline: "One post. Everywhere. Instantly."
+3. Present prominent "Try it for free" CTA button
+4. Ensure button tap leads to onboarding flow
+5. Make value proposition immediately clear and compelling
 
-- [ ] App launches in under 2 seconds
-- [ ] Branding and value proposition are clear
-- [ ] CTA button is prominent and functional
+##### Acceptance Criteria:
+
+- [ ] Branding is consistent with launch screen
+- [ ] Value proposition is clear and compelling
+- [ ] CTA button is prominent and easily tappable
 - [ ] Smooth transition to onboarding flow
+- [ ] Text is readable and well-positioned
 
 ---
 
@@ -33,7 +38,7 @@
 
 **User Story**: As a new user, I want to quickly set up my account and help the app understand my needs so it can provide a personalized experience.
 
-#### Screen 1: Platform Selection (Image 9)
+#### Screen 1: Platform Selection (@specs/ui-mockups/onboarding-1.png)
 
 **User Story**: As a content creator, I want to select which platforms I currently use so the app knows which integrations to prioritize.
 
@@ -64,7 +69,7 @@
 - [ ] Progress bar shows 20% completion
 - [ ] Continue button enabled after at least one selection
 
-#### Screen 2: Posting Frequency (Image 8)
+#### Screen 2: Posting Frequency (@specs/ui-mockups/onboarding-2.png)
 
 **User Story**: As a content creator, I want to indicate how often I post so the app understands my workflow needs.
 
@@ -90,7 +95,7 @@
 - [ ] Progress bar shows 40% completion
 - [ ] Continue button enabled after selection
 
-#### Screen 3: Content Type (Image 7)
+#### Screen 3: Content Type (@specs/ui-mockups/onboarding-3.png)
 
 **User Story**: As a content creator, I want to specify what type of content I create so the app can build the right tools for me.
 
@@ -114,7 +119,7 @@
 - [ ] Progress bar shows 60% completion
 - [ ] Continue button enabled after at least one selection
 
-#### Screen 4: Pain Points (Image 6)
+#### Screen 4: Pain Points (@specs/ui-mockups/onboarding-4.png)
 
 **User Story**: As a content creator, I want to share my biggest challenges so the app can focus on solving my most important problems first.
 
@@ -140,7 +145,7 @@
 - [ ] Progress bar shows 80% completion
 - [ ] Continue button enabled after at least one selection
 
-#### Screen 5: Pricing & Value Proposition
+#### Screen 5: Pricing & Value Proposition (Revenue Cat Paywall)
 
 **User Story**: As a potential customer, I want to understand the pricing and value proposition so I can decide whether to continue with the free tier or sign up for early bird pricing.
 
@@ -169,7 +174,7 @@
 
 **User Story**: As a new user, I want to connect my social media accounts so I can start posting immediately.
 
-#### Initial Setup Screen (Image 5)
+#### Initial Setup Screen (@specs/ui-mockups/account-link-1.png)
 
 **User Story**: As a user, I want to see which platforms are available and connect my accounts.
 
@@ -190,7 +195,7 @@
 - [ ] Users can proceed without connecting accounts
 - [ ] Error handling for failed connections
 
-#### Connected Accounts Screen (Image 4)
+#### Connected Accounts Screen (@specs/ui-mockups/account-link-2.png)
 
 **User Story**: As a user with connected accounts, I want to see my connected accounts and manage them.
 
@@ -216,7 +221,7 @@
 
 **User Story**: As a content creator, I want to write my content once and post it to multiple platforms simultaneously.
 
-#### Main Composer Screen (Image 3)
+#### Main Composer Screen (@specs/ui-mockups/post.png)
 
 **User Story**: As a user, I want to write my content and select which platforms to post to.
 
@@ -239,7 +244,7 @@
 - [ ] Send button is enabled when content and platforms are selected
 - [ ] Keyboard integration works properly
 
-#### Platform Selection (Image 2)
+#### Platform Selection (@specs/ui-mockups/post-select-channel.png)
 
 **User Story**: As a user, I want to select which of my connected accounts to post to for this specific post.
 
@@ -267,7 +272,7 @@
 
 **User Story**: As a user, I want to manage my app settings and subscription.
 
-#### Settings Screen (Image 1)
+#### Settings Screen (@specs/ui-mockups/settings.png)
 
 **User Story**: As a user, I want to access my subscription status and app settings.
 

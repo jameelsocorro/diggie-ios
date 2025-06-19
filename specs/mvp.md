@@ -12,6 +12,15 @@
 
 ## What We're Building (MVP Features)
 
+### 0. Welcome Screens
+
+**Welcome Screen**
+
+- Display Diggie logo with gradient background
+- Show tagline: "One post. Everywhere. Instantly."
+- Present "Try it for free" CTA button
+- Transition to onboarding flow on button tap
+
 ### 1. Smart Onboarding (5 Quick Screens)
 
 **Screen 1: Platform Selection**
