@@ -42,6 +42,11 @@ struct PostingFrequencyScreen: View {
                         configuration: .fullWidth
                     ) {
                         viewModel.selectFrequency(frequency)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            withAnimation {
+                                viewModel.continueToNextStep()
+                            }
+                        }
                     }
                 }
             }
@@ -49,24 +54,11 @@ struct PostingFrequencyScreen: View {
             
             Spacer()
             
-            // Continue button
-            VStack(spacing: 16) {
-                PrimaryButton(
-                    "Continue",
-                    isVisible: viewModel.canContinue
-                ) {
-                    withAnimation {
-                        viewModel.continueToNextStep()
-                    }
-                }
-                .padding(.horizontal)
-                
-                // Step indicator
-                Text(viewModel.stepIndicator)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-            }
-            .padding(.bottom)
+            // Step indicator
+            Text(viewModel.stepIndicator)
+                .font(.caption)
+                .foregroundColor(.secondary)
+                .padding(.bottom)
         }
     }
 }
