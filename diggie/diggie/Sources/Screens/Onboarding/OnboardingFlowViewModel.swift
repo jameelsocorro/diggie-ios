@@ -18,6 +18,11 @@ final class OnboardingFlowViewModel {
     
     private let onboardingService = OnboardingService()
     
+    // MARK: - Haptic Feedback
+    
+    /// Haptic feedback generators (prepared for optimal performance)
+    private let softImpactGenerator = UIImpactFeedbackGenerator(style: .soft)
+
     // MARK: - Published Properties
     
     /// Current slide offset for smooth transitions
@@ -92,6 +97,9 @@ final class OnboardingFlowViewModel {
     /// Initialize the onboarding flow ViewModel
     init() {
         updateSlideOffset()
+        
+        // Prepare haptic feedback generators for optimal performance
+        softImpactGenerator.prepare()
     }
     
     // MARK: - Public Methods
@@ -101,6 +109,7 @@ final class OnboardingFlowViewModel {
         guard canGoBack else { return }
         onboardingService.previousStep()
         updateSlideOffset()
+        softImpactGenerator.impactOccurred()
     }
     
     /// Complete onboarding and navigate to main app

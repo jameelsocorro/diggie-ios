@@ -37,8 +37,9 @@ struct PlatformSelectionScreen: View {
             // Platform options with slide up + fade animation
             FlexWrapLayout(spacing: 8) {
                 ForEach(viewModel.availablePlatforms) { platform in
-                    PlatformButton(
-                        platform: platform,
+                    ToggleButton(
+                        title: platform.displayName,
+                        icon: platform.iconName.map { .image($0) } ?? .systemImage("ellipsis"),
                         isSelected: viewModel.isPlatformSelected(platform)
                     ) {
                         viewModel.togglePlatform(platform)
