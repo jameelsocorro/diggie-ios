@@ -26,6 +26,7 @@ struct PlatformSelectionScreen: View {
                 Text("This would help me understand which platform integrations to prioritize.")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
+                    .frame(maxWidth: 300, alignment: .leading)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal)

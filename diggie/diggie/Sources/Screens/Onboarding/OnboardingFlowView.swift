@@ -23,24 +23,24 @@ struct OnboardingFlowView: View {
                 VStack {
                     // Progress bar with back button
                     HStack {
-                        if onboardingService.currentStep > 1 {
-                            Button(action: {
+                        Button(action: {
+                            if onboardingService.currentStep > 1 {
                                 onboardingService.previousStep()
-                            }) {
-                                Image(systemName: "arrow.left")
-                                    .font(.title2)
-                                    .foregroundColor(.white)
+                            } else {
+                                // Go back to welcome screen from first onboarding step
+                                appViewModel.navigateToScreen(.welcome)
                             }
+                        }) {
+                            Image(systemName: "arrow.left")
+                                .font(.title2)
+                                .foregroundColor(.white)
                         }
                         
                         ProgressView(value: onboardingService.progress)
                             .progressViewStyle(LinearProgressViewStyle(tint: .white))
                         
-                        // Spacer to balance layout when no back button
-                        if onboardingService.currentStep == 1 {
-                            Spacer()
-                                .frame(width: 24) // Same width as back button
-                        }
+                        Spacer()
+                            .frame(width: 24) // Balance layout
                     }
                     .padding(.horizontal)
                     .padding(.top)

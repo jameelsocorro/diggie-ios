@@ -14,7 +14,11 @@ struct PlatformButton: View {
     let action: () -> Void
     
     var body: some View {
-        Button(action: action) {
+        Button(action: {
+            let impactFeedback = UIImpactFeedbackGenerator(style: .light)
+            impactFeedback.impactOccurred()
+            action()
+        }) {
             HStack(spacing: 8) {
                 // Platform icon
                 if let iconName = platform.iconName {
