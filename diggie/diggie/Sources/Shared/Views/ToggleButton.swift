@@ -12,15 +12,30 @@ struct ToggleButton: View {
     let title: String
     let icon: ToggleButtonIcon?
     let isSelected: Bool
+    let configuration: ToggleButtonConfiguration
     let action: () -> Void
+    
+    init(
+        title: String,
+        icon: ToggleButtonIcon? = nil,
+        isSelected: Bool,
+        configuration: ToggleButtonConfiguration = .default,
+        action: @escaping () -> Void
+    ) {
+        self.title = title
+        self.icon = icon
+        self.isSelected = isSelected
+        self.configuration = configuration
+        self.action = action
+    }
     
     var body: some View {
         Button(action: {
-            let impactFeedback = UIImpactFeedbackGenerator(style: .light)
+            let impactFeedback = UIImpactFeedbackGenerator(style: .soft)
             impactFeedback.impactOccurred()
             action()
         }) {
-            HStack(spacing: 8) {
+            HStack(spacing: configuration.contentSpacing) {
                 // Icon
                 if let icon = icon {
                     Group {
@@ -29,28 +44,40 @@ struct ToggleButton: View {
                             Image(imageName)
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 20, height: 20)
-                                .foregroundColor(.white)
+                                .frame(width: configuration.iconSize.width, height: configuration.iconSize.height)
+                                .foregroundColor(isSelected ? configuration.selectedIconColor : configuration.iconColor)
                         case .systemImage(let systemName):
                             Image(systemName: systemName)
-                                .font(.system(size: 16, weight: .medium))
-                                .foregroundColor(.white)
+                                .font(.system(size: configuration.iconSize.width, weight: .medium))
+                                .foregroundColor(isSelected ? configuration.selectedIconColor : configuration.iconColor)
                         }
                     }
                 }
                 
                 Text(title)
-                    .font(.subheadline)
+                    .font(configuration.textFont)
                     .fontWeight(.medium)
-                    .foregroundColor(.white)
+                    .foregroundColor(isSelected ? configuration.selectedTextColor : configuration.textColor)
                     .lineLimit(1)
+                
+                if configuration.expandToFillWidth {
+                    Spacer()
+                }
+                
+                // Checkmark
+                if configuration.showCheckmark && isSelected {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundColor(.white)
+                        .font(.title2)
+                }
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 12)
+            .padding(.horizontal, configuration.horizontalPadding)
+            .padding(.vertical, configuration.verticalPadding)
+            .frame(maxWidth: configuration.expandToFillWidth ? .infinity : nil)
             .background(
-                RoundedRectangle(cornerRadius: 20)
-                    .fill(isSelected ? Color.white.opacity(0.2) : Color.gray.opacity(0.3))
-                    .stroke(isSelected ? Color.white.opacity(0.4) : Color.clear, lineWidth: 1)
+                RoundedRectangle(cornerRadius: configuration.cornerRadius)
+                    .fill(isSelected ? configuration.selectedBackgroundColor : configuration.backgroundColor)
+                    .stroke(isSelected ? configuration.selectedBorderColor : configuration.borderColor, lineWidth: configuration.borderWidth)
             )
         }
         .buttonStyle(PlainButtonStyle())
@@ -63,38 +90,142 @@ enum ToggleButtonIcon {
     case systemImage(String)
 }
 
+/// Configuration for ToggleButton appearance and behavior
+struct ToggleButtonConfiguration {
+    let textFont: Font
+    let textColor: Color
+    let selectedTextColor: Color
+    let iconColor: Color
+    let selectedIconColor: Color
+    let backgroundColor: Color
+    let selectedBackgroundColor: Color
+    let borderColor: Color
+    let selectedBorderColor: Color
+    let borderWidth: CGFloat
+    let cornerRadius: CGFloat
+    let horizontalPadding: CGFloat
+    let verticalPadding: CGFloat
+    let contentSpacing: CGFloat
+    let iconSize: CGSize
+    let expandToFillWidth: Bool
+    let showCheckmark: Bool
+    
+    init(
+        textFont: Font = .subheadline,
+        textColor: Color = .white,
+        selectedTextColor: Color = .white,
+        iconColor: Color = .white,
+        selectedIconColor: Color = .white,
+        backgroundColor: Color = Color.gray.opacity(0.3),
+        selectedBackgroundColor: Color = Color.white.opacity(0.2),
+        borderColor: Color = .clear,
+        selectedBorderColor: Color = Color.white.opacity(0.4),
+        borderWidth: CGFloat = 1,
+        cornerRadius: CGFloat = 20,
+        horizontalPadding: CGFloat = 16,
+        verticalPadding: CGFloat = 12,
+        contentSpacing: CGFloat = 8,
+        iconSize: CGSize = CGSize(width: 20, height: 20),
+        expandToFillWidth: Bool = false,
+        showCheckmark: Bool = false
+    ) {
+        self.textFont = textFont
+        self.textColor = textColor
+        self.selectedTextColor = selectedTextColor
+        self.iconColor = iconColor
+        self.selectedIconColor = selectedIconColor
+        self.backgroundColor = backgroundColor
+        self.selectedBackgroundColor = selectedBackgroundColor
+        self.borderColor = borderColor
+        self.selectedBorderColor = selectedBorderColor
+        self.borderWidth = borderWidth
+        self.cornerRadius = cornerRadius
+        self.horizontalPadding = horizontalPadding
+        self.verticalPadding = verticalPadding
+        self.contentSpacing = contentSpacing
+        self.iconSize = iconSize
+        self.expandToFillWidth = expandToFillWidth
+        self.showCheckmark = showCheckmark
+    }
+}
+
+// MARK: - Preset Configurations
+
+extension ToggleButtonConfiguration {
+    /// Default compact configuration (for platform selection)
+    static let `default` = ToggleButtonConfiguration()
+    
+    /// Full width configuration with checkmarks (for frequency selection)
+    static let fullWidth = ToggleButtonConfiguration(
+        textFont: .headline,
+        textColor: .primary,
+        selectedTextColor: .primary,
+        iconColor: .primary,
+        selectedIconColor: .primary,
+        borderColor: .clear,
+        cornerRadius: 12,
+        verticalPadding: 16,
+        expandToFillWidth: true,
+        showCheckmark: true
+    )
+}
+
 #Preview {
     VStack(spacing: 16) {
+        // Default compact configuration (platform style)
+        HStack {
+            ToggleButton(
+                title: "Threads",
+                icon: .image("threads"),
+                isSelected: false
+            ) {
+                print("Threads tapped")
+            }
+            
+            ToggleButton(
+                title: "X",
+                icon: .image("x"),
+                isSelected: true
+            ) {
+                print("X tapped")
+            }
+        }
+        
+        // Full width preset configuration (frequency style)
         ToggleButton(
-            title: "Threads",
-            icon: .image("threads"),
-            isSelected: false
+            title: "Daily",
+            isSelected: false,
+            configuration: .fullWidth
         ) {
-            print("Threads tapped")
+            print("Daily tapped")
         }
         
         ToggleButton(
-            title: "X",
-            icon: .image("x"),
-            isSelected: true
+            title: "Few times a week",
+            isSelected: true,
+            configuration: .fullWidth
         ) {
-            print("X tapped")
+            print("Few times a week tapped")
         }
         
+        // Custom configuration (full width with icon)
         ToggleButton(
-            title: "Others",
-            icon: .systemImage("ellipsis"),
-            isSelected: false
+            title: "Settings",
+            icon: .systemImage("gear"),
+            isSelected: false,
+            configuration: ToggleButtonConfiguration(
+                textFont: .body,
+                textColor: .primary,
+                selectedTextColor: .white,
+                iconColor: .primary,
+                selectedIconColor: .white,
+                backgroundColor: Color(.systemGray6),
+                selectedBackgroundColor: .accentColor,
+                cornerRadius: 8,
+                expandToFillWidth: true
+            )
         ) {
-            print("Others tapped")
-        }
-        
-        ToggleButton(
-            title: "Text Only",
-            icon: nil,
-            isSelected: false
-        ) {
-            print("Text only tapped")
+            print("Settings tapped")
         }
     }
     .padding()

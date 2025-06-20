@@ -14,20 +14,21 @@ struct PostingFrequencyScreen: View {
     
     var body: some View {
         VStack(spacing: 24) {
-            Spacer()
+            Spacer().frame(height: 24)
             
             // Header
-            VStack(spacing: 12) {
+            VStack(alignment: .leading, spacing: 12) {
                 Text("How often do you post?")
                     .font(.largeTitle)
                     .fontWeight(.bold)
-                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: 300, alignment: .leading)
                 
                 Text("This helps me understand your workflow.")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
-                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: 300, alignment: .leading)
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal)
             
             Spacer()
@@ -35,9 +36,10 @@ struct PostingFrequencyScreen: View {
             // Frequency options
             VStack(spacing: 16) {
                 ForEach(viewModel.availableFrequencies) { frequency in
-                    FrequencyButton(
-                        frequency: frequency,
-                        isSelected: viewModel.isFrequencySelected(frequency)
+                    ToggleButton(
+                        title: frequency.displayName,
+                        isSelected: viewModel.isFrequencySelected(frequency),
+                        configuration: .fullWidth
                     ) {
                         viewModel.selectFrequency(frequency)
                     }
