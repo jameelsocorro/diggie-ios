@@ -38,7 +38,7 @@ struct OnboardingFlowView: View {
                         }
                         
                         ProgressView(value: viewModel.progress)
-                            .progressViewStyle(LinearProgressViewStyle(tint: .white))
+                            .progressViewStyle(LinearProgressViewStyle(tint: .purple))
                         
                         Spacer()
                             .frame(width: 24) // Balance layout

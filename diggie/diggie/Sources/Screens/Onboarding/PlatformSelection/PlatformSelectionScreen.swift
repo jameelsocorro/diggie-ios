@@ -14,7 +14,7 @@ struct PlatformSelectionScreen: View {
     
     var body: some View {
         VStack(spacing: 24) {
-            Spacer()
+            Spacer().frame(height: 24)
             
             // Header with slide down + fade animation
             VStack(alignment: .leading, spacing: 12) {
@@ -50,8 +50,7 @@ struct PlatformSelectionScreen: View {
             .opacity(viewModel.platformsVisible ? 1 : 0)
             .offset(x: viewModel.platformsVisible ? 0 : -50)            
             
-            Spacer()
-            Spacer()
+            Spacer()            
             
             // Continue button with slide up + fade animation
             VStack(spacing: 16) {
