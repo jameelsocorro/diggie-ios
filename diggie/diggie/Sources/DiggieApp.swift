@@ -33,11 +33,7 @@ struct DiggieApp: App {
                 }
             )
         case .onboarding:
-            // TODO: Implement onboarding flow
-            Text("Onboarding - Coming Soon")
-                .foregroundColor(.white)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color.black)
+            OnboardingFlowView()
         case .main:
             // TODO: Implement main app flow
             Text("Main App - Coming Soon")

@@ -33,9 +33,7 @@ final class DiggieAppViewModel {
     
     /// Handle welcome screen CTA button tap
     func handleWelcomeCTATap() {
-        // For now, we'll stay on welcome screen
-        // In the future, this will navigate to onboarding
-        print("Welcome CTA tapped - will navigate to onboarding in future")
+        navigateToScreen(.onboarding)
     }
 }
 

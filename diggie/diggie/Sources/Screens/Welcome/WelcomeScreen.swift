@@ -61,19 +61,14 @@ struct WelcomeScreen: View {
                 
                 
                 // CTA Button with slide up + fade animation
-                Button(action: {
+                PrimaryButton(
+                    title: "Try it for free",
+                    accessibilityLabel: "Try it for free",
+                    accessibilityHint: "Tap to start using Diggie",
+                    isVisible: viewModel.ctaButtonVisible
+                ) {
                     viewModel.handleCTATap()
-                }) {
-                    Text("Try it for free")
-                        .font(.body.weight(.medium))
-                        .foregroundColor(.black)
-                        .frame(maxWidth: .infinity, maxHeight: 50)
-                        .background(Color.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
                 }
-                .accessibilityLabel("Try it for free")
-                .accessibilityHint("Tap to start using Diggie")
-                .opacity(viewModel.ctaButtonVisible ? 1 : 0)
                 
                 Spacer()
                     .frame(height: 24)
