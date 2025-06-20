@@ -23,7 +23,6 @@ final class WelcomeScreenViewModel {
     
     /// Pre-prepared haptic feedback generators for optimal performance
     private let softFeedbackGenerator = UIImpactFeedbackGenerator(style: .soft)
-    private let mediumFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     
     /// Initialize the welcome screen view model
     /// - Parameter onCTATap: Callback to execute when CTA button is tapped
@@ -32,7 +31,6 @@ final class WelcomeScreenViewModel {
         
         // Prepare feedback generators for optimal performance
         softFeedbackGenerator.prepare()
-        mediumFeedbackGenerator.prepare()
     }
     
     /// Start the welcome screen animations with haptic feedback triggered on start
@@ -59,7 +57,7 @@ final class WelcomeScreenViewModel {
         
         // Schedule haptic feedback for when CTA button animation starts
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
-            self.mediumFeedbackGenerator.impactOccurred()
+            self.softFeedbackGenerator.impactOccurred()
         }
         
         // Animate CTA button last
@@ -71,7 +69,7 @@ final class WelcomeScreenViewModel {
     /// Handle the CTA button tap with haptic feedback
     func handleCTATap() {
         // Trigger button tap haptic feedback using pre-prepared generator
-        mediumFeedbackGenerator.impactOccurred()
+        softFeedbackGenerator.impactOccurred()
         
         // Execute the callback
         onCTATap()

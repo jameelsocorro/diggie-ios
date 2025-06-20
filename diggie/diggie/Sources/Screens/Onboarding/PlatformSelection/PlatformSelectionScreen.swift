@@ -16,7 +16,7 @@ struct PlatformSelectionScreen: View {
         VStack(spacing: 24) {
             Spacer()
             
-            // Header
+            // Header with slide down + fade animation
             VStack(alignment: .leading, spacing: 12) {
                 Text("Which platforms do you use?")
                     .font(.largeTitle)
@@ -30,10 +30,11 @@ struct PlatformSelectionScreen: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal)
+            .opacity(viewModel.headerVisible ? 1 : 0)
             
             Spacer()
             
-            // Platform options with dynamic wrapping layout
+            // Platform options with slide up + fade animation
             FlexWrapLayout(spacing: 8) {
                 ForEach(viewModel.availablePlatforms) { platform in
                     PlatformButton(
@@ -45,14 +46,18 @@ struct PlatformSelectionScreen: View {
                 }
             }
             .padding(.horizontal)
+            .opacity(viewModel.platformsVisible ? 1 : 0)
+            .offset(x: viewModel.platformsVisible ? 0 : -50)            
             
             Spacer()
+            Spacer()
             
-            // Continue button
+            // Continue button with slide up + fade animation
             VStack(spacing: 16) {
                 PrimaryButton(
                     "Continue",
-                    isVisible: viewModel.canContinue
+                    isVisible: viewModel.continueButtonVisible,
+                    isEnabled: viewModel.canContinue
                 ) {
                     withAnimation {
                         viewModel.continueToNextStep()
@@ -66,6 +71,12 @@ struct PlatformSelectionScreen: View {
                     .foregroundColor(.secondary)
             }
             .padding(.bottom)
+            .opacity(viewModel.continueButtonVisible ? 1 : 0)
+            .offset(y: viewModel.continueButtonVisible ? 0 : 30)
+            .scaleEffect(viewModel.continueButtonVisible ? 1 : 0.9)
+        }
+        .onAppear {
+            viewModel.startAnimations()
         }
     }
 }

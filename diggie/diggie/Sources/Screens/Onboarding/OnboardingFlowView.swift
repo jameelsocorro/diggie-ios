@@ -13,6 +13,13 @@ struct OnboardingFlowView: View {
     @State private var onboardingService = OnboardingService()
     @Environment(DiggieAppViewModel.self) private var appViewModel
     
+    // Persistent ViewModels to prevent recreation on service updates
+    @State private var platformSelectionViewModel: PlatformSelectionScreenViewModel?
+    @State private var postingFrequencyViewModel: PostingFrequencyScreenViewModel?
+    @State private var contentTypeViewModel: ContentTypeScreenViewModel?
+    @State private var painPointsViewModel: PainPointsScreenViewModel?
+    @State private var pricingViewModel: PricingScreenViewModel?
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -49,37 +56,67 @@ struct OnboardingFlowView: View {
                     Group {
                         switch onboardingService.currentStep {
                         case 1:
-                            PlatformSelectionScreen(
-                                viewModel: PlatformSelectionScreenViewModel(onboardingService: onboardingService)
-                            )
+                            if let viewModel = platformSelectionViewModel {
+                                PlatformSelectionScreen(viewModel: viewModel)
+                                    .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
+                            }
                         case 2:
-                            PostingFrequencyScreen(
-                                viewModel: PostingFrequencyScreenViewModel(onboardingService: onboardingService)
-                            )
+                            if let viewModel = postingFrequencyViewModel {
+                                PostingFrequencyScreen(viewModel: viewModel)
+                                    .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
+                            }
                         case 3:
-                            ContentTypeScreen(
-                                viewModel: ContentTypeScreenViewModel(onboardingService: onboardingService)
-                            )
+                            if let viewModel = contentTypeViewModel {
+                                ContentTypeScreen(viewModel: viewModel)
+                                    .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
+                            }
                         case 4:
-                            PainPointsScreen(
-                                viewModel: PainPointsScreenViewModel(onboardingService: onboardingService)
-                            )
+                            if let viewModel = painPointsViewModel {
+                                PainPointsScreen(viewModel: viewModel)
+                                    .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
+                            }
                         case 5:
-                            PricingScreen(
-                                viewModel: PricingScreenViewModel(onboardingService: onboardingService)
-                            )
+                            if let viewModel = pricingViewModel {
+                                PricingScreen(viewModel: viewModel)
+                                    .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
+                            }
                         default:
-                            PlatformSelectionScreen(
-                                viewModel: PlatformSelectionScreenViewModel(onboardingService: onboardingService)
-                            )
+                            if let viewModel = platformSelectionViewModel {
+                                PlatformSelectionScreen(viewModel: viewModel)
+                                    .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
+                            }
                         }
                     }
                     .animation(.easeInOut(duration: 0.3), value: onboardingService.currentStep)
                 }
             }
         }
+        .onAppear {
+            setupViewModels()
+        }
         .onReceive(NotificationCenter.default.publisher(for: .onboardingCompleted)) { _ in
             appViewModel.navigateToScreen(.main)
+        }
+    }
+    
+    // MARK: - Private Methods
+    
+    /// Setup ViewModels once to prevent recreation on service updates
+    private func setupViewModels() {
+        if platformSelectionViewModel == nil {
+            platformSelectionViewModel = PlatformSelectionScreenViewModel(onboardingService: onboardingService)
+        }
+        if postingFrequencyViewModel == nil {
+            postingFrequencyViewModel = PostingFrequencyScreenViewModel(onboardingService: onboardingService)
+        }
+        if contentTypeViewModel == nil {
+            contentTypeViewModel = ContentTypeScreenViewModel(onboardingService: onboardingService)
+        }
+        if painPointsViewModel == nil {
+            painPointsViewModel = PainPointsScreenViewModel(onboardingService: onboardingService)
+        }
+        if pricingViewModel == nil {
+            pricingViewModel = PricingScreenViewModel(onboardingService: onboardingService)
         }
     }
 }

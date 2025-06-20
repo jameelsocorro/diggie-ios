@@ -27,6 +27,9 @@ struct PrimaryButton: View {
     /// Whether the button is visible (for animations)
     let isVisible: Bool
     
+    /// Whether the button is enabled (default: true)
+    let isEnabled: Bool
+    
     // MARK: - Initializers
     
     /// Initialize with all parameters
@@ -35,18 +38,21 @@ struct PrimaryButton: View {
     ///   - accessibilityLabel: Optional accessibility label (defaults to title)
     ///   - accessibilityHint: Optional accessibility hint
     ///   - isVisible: Whether button is visible for animations (default: true)
+    ///   - isEnabled: Whether button is enabled (default: true)
     ///   - action: Button tap action
     init(
         title: String,
         accessibilityLabel: String? = nil,
         accessibilityHint: String? = nil,
         isVisible: Bool = true,
+        isEnabled: Bool = true,
         action: @escaping () -> Void
     ) {
         self.title = title
         self.accessibilityLabel = accessibilityLabel
         self.accessibilityHint = accessibilityHint
         self.isVisible = isVisible
+        self.isEnabled = isEnabled
         self.action = action
     }
     
@@ -54,19 +60,21 @@ struct PrimaryButton: View {
     
     var body: some View {
         Button(action: {
+            guard isEnabled else { return }
             let impactFeedback = UIImpactFeedbackGenerator(style: .medium)
             impactFeedback.impactOccurred()
             action()
         }) {
             Text(title)
                 .font(.body.weight(.medium))
-                .foregroundColor(.black)
+                .foregroundColor(isEnabled ? .black : .gray)
                 .frame(maxWidth: .infinity, maxHeight: 50)
-                .background(Color.white)
+                .background(isEnabled ? Color.white : Color.white.opacity(0.3))
                 .clipShape(RoundedRectangle(cornerRadius: 12))
         }
+        .disabled(!isEnabled)
         .accessibilityLabel(accessibilityLabel ?? title)
-        .accessibilityHint(accessibilityHint ?? "Tap to continue")
+        .accessibilityHint(accessibilityHint ?? (isEnabled ? "Tap to continue" : "Complete the current step to continue"))
         .opacity(isVisible ? 1 : 0)
     }
 }
@@ -85,6 +93,7 @@ extension PrimaryButton {
             accessibilityLabel: nil,
             accessibilityHint: nil,
             isVisible: true,
+            isEnabled: true,
             action: action
         )
     }
@@ -100,6 +109,40 @@ extension PrimaryButton {
             accessibilityLabel: nil,
             accessibilityHint: nil,
             isVisible: isVisible,
+            isEnabled: true,
+            action: action
+        )
+    }
+    
+    /// Initialize with title, action, and enabled state
+    /// - Parameters:
+    ///   - title: Button text
+    ///   - isEnabled: Whether button is enabled
+    ///   - action: Button tap action
+    init(_ title: String, isEnabled: Bool, action: @escaping () -> Void) {
+        self.init(
+            title: title,
+            accessibilityLabel: nil,
+            accessibilityHint: nil,
+            isVisible: true,
+            isEnabled: isEnabled,
+            action: action
+        )
+    }
+    
+    /// Initialize with title, visibility, enabled state, and action
+    /// - Parameters:
+    ///   - title: Button text
+    ///   - isVisible: Whether button is visible
+    ///   - isEnabled: Whether button is enabled
+    ///   - action: Button tap action
+    init(_ title: String, isVisible: Bool, isEnabled: Bool, action: @escaping () -> Void) {
+        self.init(
+            title: title,
+            accessibilityLabel: nil,
+            accessibilityHint: nil,
+            isVisible: isVisible,
+            isEnabled: isEnabled,
             action: action
         )
     }
@@ -111,6 +154,10 @@ extension PrimaryButton {
     VStack(spacing: 20) {
         PrimaryButton("Try it for free") {
             print("Button tapped")
+        }
+        
+        PrimaryButton("Continue", isEnabled: false) {
+            print("Continue tapped")
         }
         
         PrimaryButton("Continue", isVisible: false) {

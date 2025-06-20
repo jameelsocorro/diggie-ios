@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import UIKit
+import SwiftUI
 
 /// ViewModel for Platform Selection screen (Onboarding Step 1)
 @Observable
@@ -16,6 +18,11 @@ final class PlatformSelectionScreenViewModel {
     
     private let onboardingService: OnboardingService
     
+    // MARK: - Haptic Feedback
+    
+    /// Haptic feedback generators (prepared for optimal performance)
+    private let softImpactGenerator = UIImpactFeedbackGenerator(style: .soft)
+    
     // MARK: - Published Properties
     
     /// Currently selected platforms
@@ -23,6 +30,17 @@ final class PlatformSelectionScreenViewModel {
     
     /// Whether the continue button should be enabled
     var canContinue: Bool = false
+    
+    // MARK: - Animation Properties
+    
+    /// Controls header section animation visibility
+    var headerVisible: Bool = false
+    
+    /// Controls platform buttons section animation visibility
+    var platformsVisible: Bool = false
+    
+    /// Controls continue button section animation visibility
+    var continueButtonVisible: Bool = false
     
     // MARK: - Computed Properties
     
@@ -47,6 +65,10 @@ final class PlatformSelectionScreenViewModel {
     /// - Parameter onboardingService: Service managing onboarding flow
     init(onboardingService: OnboardingService) {
         self.onboardingService = onboardingService
+        
+        // Prepare haptic feedback generators for optimal performance
+        softImpactGenerator.prepare()        
+        
         loadExistingData()
     }
     
@@ -60,6 +82,7 @@ final class PlatformSelectionScreenViewModel {
         } else {
             selectedPlatforms.insert(platform)
         }
+        softImpactGenerator.impactOccurred()
         updateContinueState()
         syncWithService()
     }
@@ -75,6 +98,35 @@ final class PlatformSelectionScreenViewModel {
     func continueToNextStep() {
         guard canContinue else { return }
         onboardingService.nextStep()
+    }
+    
+    /// Start the entrance animations with staggered timing
+    func startAnimations() {        
+        
+        
+        withAnimation(.easeOut(duration: 0.2)) {
+            headerVisible = true
+        }
+      
+        // Schedule haptic feedback for when platform buttons animation starts
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.softImpactGenerator.impactOccurred()
+        }
+
+        // Platform buttons animation - 0.3s delay + 0.3s duration = finishes at 0.6s
+        withAnimation(.easeOut(duration: 0.3).delay(0.3)) {
+            platformsVisible = true
+        }
+                    
+        // Schedule haptic feedback for when continue button animation starts
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.softImpactGenerator.impactOccurred()
+        }
+
+        // Continue button animation - 0.3s delay + 0.5s duration = finishes at 0.8s
+        withAnimation(.easeOut(duration: 0.5).delay(0.3)) {
+            continueButtonVisible = true
+        }
     }
     
     // MARK: - Private Methods
