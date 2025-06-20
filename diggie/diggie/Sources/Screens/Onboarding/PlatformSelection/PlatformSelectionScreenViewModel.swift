@@ -17,6 +17,7 @@ final class PlatformSelectionScreenViewModel {
     // MARK: - Dependencies
     
     private let onboardingService: OnboardingService
+    private let navigateForward: (() -> Void)?
     
     // MARK: - Haptic Feedback
     
@@ -62,9 +63,12 @@ final class PlatformSelectionScreenViewModel {
     // MARK: - Initialization
     
     /// Initialize with onboarding service dependency
-    /// - Parameter onboardingService: Service managing onboarding flow
-    init(onboardingService: OnboardingService) {
+    /// - Parameters:
+    ///   - onboardingService: Service managing onboarding flow
+    ///   - navigateForward: Optional callback for forward navigation with proper animation
+    init(onboardingService: OnboardingService, navigateForward: (() -> Void)? = nil) {
         self.onboardingService = onboardingService
+        self.navigateForward = navigateForward
         
         // Prepare haptic feedback generators for optimal performance
         softImpactGenerator.prepare()        
@@ -97,7 +101,11 @@ final class PlatformSelectionScreenViewModel {
     /// Proceed to next step
     func continueToNextStep() {
         guard canContinue else { return }
-        onboardingService.nextStep()
+        if let navigateForward = navigateForward {
+            navigateForward()
+        } else {
+            onboardingService.nextStep()
+        }
     }
     
     /// Start the entrance animations with staggered timing

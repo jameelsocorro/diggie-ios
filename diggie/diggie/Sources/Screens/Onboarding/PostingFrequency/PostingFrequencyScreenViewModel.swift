@@ -15,6 +15,7 @@ final class PostingFrequencyScreenViewModel {
     // MARK: - Dependencies
     
     private let onboardingService: OnboardingService
+    private let navigateForward: (() -> Void)?
     
     // MARK: - Published Properties
     
@@ -44,9 +45,12 @@ final class PostingFrequencyScreenViewModel {
     // MARK: - Initialization
     
     /// Initialize with onboarding service dependency
-    /// - Parameter onboardingService: Service managing onboarding flow
-    init(onboardingService: OnboardingService) {
+    /// - Parameters:
+    ///   - onboardingService: Service managing onboarding flow
+    ///   - navigateForward: Optional callback for forward navigation with proper animation
+    init(onboardingService: OnboardingService, navigateForward: (() -> Void)? = nil) {
         self.onboardingService = onboardingService
+        self.navigateForward = navigateForward
         loadExistingData()
     }
     
@@ -70,7 +74,11 @@ final class PostingFrequencyScreenViewModel {
     /// Proceed to next step
     func continueToNextStep() {
         guard canContinue else { return }
-        onboardingService.nextStep()
+        if let navigateForward = navigateForward {
+            navigateForward()
+        } else {
+            onboardingService.nextStep()
+        }
     }
     
     // MARK: - Private Methods

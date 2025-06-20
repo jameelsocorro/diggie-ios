@@ -1,42 +1,48 @@
-# Platform Button Screen Disappearing Issue - Investigation and Fix
+# Onboarding ViewModels Update Plan
 
-## Problem Analysis
-After analyzing the PlatformButton implementation and related code, I've identified the potential cause of the screen disappearing when toggling platform buttons:
+## Task: Update onboarding screen ViewModels to accept navigateForward callback
 
-### Root Cause Analysis:
-1. **PlatformButton Implementation**: The button itself looks fine - it just calls the action closure and provides haptic feedback
-2. **PlatformSelectionScreenViewModel**: The `togglePlatform` method updates state and calls `syncWithService()`
-3. **OnboardingService**: The `nextStep()` method increments `currentStep` when `canProceedFromCurrentStep` is true
-4. **OnboardingFlowView**: Has an animation that transitions between screens when `onboardingService.currentStep` changes (line 77)
+Based on the analysis of the current implementations, I need to update 4 ViewModels to match the pattern established in `PlatformSelectionScreenViewModel`.
 
-### The Issue:
-The problem appears to be in the **OnboardingFlowView** at line 77:
-```swift
-.animation(.easeInOut(duration: 0.3), value: onboardingService.currentStep)
-```
+## Current State Analysis
 
-When a platform button is toggled:
-1. It calls `viewModel.togglePlatform(platform)`
-2. This updates `selectedPlatforms` and calls `syncWithService()`
-3. The service updates its state, which might trigger reactivity
-4. The animation modifier might be causing the entire view to re-render or transition unexpectedly
+**PlatformSelectionScreenViewModel (✅ Already Updated):**
+- Constructor: `init(onboardingService: OnboardingService, navigateForward: (() -> Void)? = nil)`
+- Has private `navigateForward` property
+- `continueToNextStep()` uses callback if available, falls back to service
 
-## Plan to Fix
+**ViewModels to Update:**
+1. **PostingFrequencyScreenViewModel** - Missing navigateForward pattern
+2. **ContentTypeScreenViewModel** - Missing navigateForward pattern  
+3. **PainPointsScreenViewModel** - Missing navigateForward pattern
+4. **PricingScreenViewModel** - Missing navigateForward pattern (special case - has multiple completion methods)
 
-### Task 1: Investigate Animation Behavior
-- [ ] Review the animation modifier in OnboardingFlowView line 77
-- [ ] Check if the animation is being triggered incorrectly when platform selection changes
+## Todo Items
 
-### Task 2: Fix the Animation Issue
-- [ ] Modify the animation to be more specific and only trigger on actual step changes
-- [ ] Ensure platform selection updates don't cause unwanted screen transitions
+- [ ] Update PostingFrequencyScreenViewModel constructor and continueToNextStep method
+- [ ] Update ContentTypeScreenViewModel constructor and continueToNextStep method
+- [ ] Update PainPointsScreenViewModel constructor and continueToNextStep method
+- [ ] Update PricingScreenViewModel constructor and completion methods (selectEarlyBird, selectFreeTier, selectMaybeLater)
 
-### Task 3: Test the Fix
-- [ ] Verify that platform button toggling no longer causes screen disappearing
-- [ ] Ensure normal navigation between onboarding steps still works correctly
+## Implementation Details
 
-## Changes Made
-(To be filled as work progresses)
+For each ViewModel (except PricingScreenViewModel):
+1. Add optional `navigateForward: (() -> Void)? = nil` parameter to constructor
+2. Store as private property 
+3. Update `continueToNextStep()` method to check for callback first, fallback to service
 
-## Review
-(To be added after completion)
+For PricingScreenViewModel:
+1. Add optional `navigateForward: (() -> Void)? = nil` parameter to constructor
+2. Store as private property
+3. Update `completeOnboarding()` method to use callback if available, fallback to service
+
+## Expected Changes Summary
+
+Each updated ViewModel will:
+- Accept an optional navigation callback in the constructor
+- Use the callback for navigation when provided
+- Maintain backward compatibility with existing code
+- Follow the same pattern as PlatformSelectionScreenViewModel
+
+## Review Section
+(To be completed after implementation)
