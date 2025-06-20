@@ -30,6 +30,7 @@ struct PostingFrequencyScreen: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal)
+            .opacity(viewModel.headerVisible ? 1 : 0)
             
             Spacer()
             
@@ -42,15 +43,12 @@ struct PostingFrequencyScreen: View {
                         configuration: .fullWidth
                     ) {
                         viewModel.selectFrequency(frequency)
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                            withAnimation {
-                                viewModel.continueToNextStep()
-                            }
-                        }
                     }
                 }
             }
             .padding(.horizontal)
+            .opacity(viewModel.frequenciesVisible ? 1 : 0)
+            .offset(y: viewModel.frequenciesVisible ? 0 : -50)            
             
             Spacer()
             
@@ -59,6 +57,12 @@ struct PostingFrequencyScreen: View {
                 .font(.caption)
                 .foregroundColor(.secondary)
                 .padding(.bottom)
+                .opacity(viewModel.stepIndicatorVisible ? 1 : 0)
+                .offset(y: viewModel.stepIndicatorVisible ? 0 : 30)
+                .scaleEffect(viewModel.stepIndicatorVisible ? 1 : 0.9)
+        }
+        .onAppear {
+            viewModel.startAnimations()
         }
     }
 }

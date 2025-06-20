@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 /// ViewModel for Posting Frequency screen (Onboarding Step 2)
 @Observable
@@ -17,6 +18,11 @@ final class PostingFrequencyScreenViewModel {
     private let onboardingService: OnboardingService
     private let navigateForward: (() -> Void)?
     
+    // MARK: - Haptic Feedback
+    
+    /// Haptic feedback generators (prepared for optimal performance)
+    private let softImpactGenerator = UIImpactFeedbackGenerator(style: .soft)
+    
     // MARK: - Published Properties
     
     /// Currently selected posting frequency
@@ -25,6 +31,15 @@ final class PostingFrequencyScreenViewModel {
     /// Whether the continue button should be enabled
     var canContinue: Bool = false
     
+    /// Whether the header is visible
+    var headerVisible: Bool = false
+    
+    /// Whether the frequency options are visible
+    var frequenciesVisible: Bool = false
+    
+    /// Whether the continue button is visible
+    var stepIndicatorVisible: Bool = false
+
     // MARK: - Computed Properties
     
     /// Available frequency options
@@ -52,6 +67,7 @@ final class PostingFrequencyScreenViewModel {
         self.onboardingService = onboardingService
         self.navigateForward = navigateForward
         loadExistingData()
+        softImpactGenerator.prepare()
     }
     
     // MARK: - Public Methods
@@ -62,6 +78,12 @@ final class PostingFrequencyScreenViewModel {
         selectedFrequency = frequency
         updateContinueState()
         syncWithService()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            withAnimation {
+                self.continueToNextStep()
+            }
+        }
     }
     
     /// Check if a frequency is selected
@@ -78,6 +100,34 @@ final class PostingFrequencyScreenViewModel {
             navigateForward()
         } else {
             onboardingService.nextStep()
+        }
+    }
+
+    /// Start the entrance animations with staggered timing
+    func startAnimations() {        
+        
+        withAnimation(.easeOut(duration: 0.2)) {
+            headerVisible = true
+        }
+      
+        // Schedule haptic feedback for when platform buttons animation starts
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.softImpactGenerator.impactOccurred()
+        }
+
+        // Platform buttons animation - 0.3s delay + 0.3s duration = finishes at 0.6s
+        withAnimation(.easeOut(duration: 0.3).delay(0.3)) {
+            frequenciesVisible = true
+        }
+                    
+        // Schedule haptic feedback for when continue button animation starts
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.softImpactGenerator.impactOccurred()
+        }
+
+        // Continue button animation - 0.3s delay + 0.5s duration = finishes at 0.8s
+        withAnimation(.easeOut(duration: 0.5).delay(0.3)) {
+            stepIndicatorVisible = true
         }
     }
     
