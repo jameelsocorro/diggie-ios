@@ -21,6 +21,9 @@ final class PricingScreenViewModel {
     /// Whether a purchase is in progress
     var isPurchaseInProgress: Bool = false
     
+    /// Whether this screen is currently active for animations
+    var isActive: Bool = false
+    
     // MARK: - Computed Properties
     
     /// Progress for this step (100%)
@@ -123,6 +126,18 @@ final class PricingScreenViewModel {
     /// Handle "maybe later" selection
     func selectMaybeLater() {
         completeOnboarding()
+    }
+    
+    /// Update the active state for animation control
+    /// - Parameter isActive: Whether this screen is currently active
+    func updateActiveState(_ isActive: Bool) {
+        self.isActive = isActive
+    }
+    
+    /// Start animations for this screen
+    func startAnimations() {
+        guard isActive else { return }
+        // Animation implementation will be added here when needed
     }
     
     // MARK: - Private Methods

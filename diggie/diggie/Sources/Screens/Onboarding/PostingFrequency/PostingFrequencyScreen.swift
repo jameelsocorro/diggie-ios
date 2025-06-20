@@ -48,7 +48,7 @@ struct PostingFrequencyScreen: View {
             }
             .padding(.horizontal)
             .opacity(viewModel.frequenciesVisible ? 1 : 0)
-            .offset(y: viewModel.frequenciesVisible ? 0 : -50)            
+            .offset(y: viewModel.frequenciesVisible ? 0 : 50)            
             
             Spacer()
             
@@ -62,7 +62,14 @@ struct PostingFrequencyScreen: View {
                 .scaleEffect(viewModel.stepIndicatorVisible ? 1 : 0.9)
         }
         .onAppear {
-            viewModel.startAnimations()
+            if viewModel.isActive {
+                viewModel.startAnimations()
+            }
+        }
+        .onChange(of: viewModel.isActive) { _, isActive in
+            if isActive {
+                viewModel.startAnimations()
+            }
         }
     }
 }

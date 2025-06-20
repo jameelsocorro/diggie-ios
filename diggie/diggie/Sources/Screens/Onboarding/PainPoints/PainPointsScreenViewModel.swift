@@ -25,6 +25,9 @@ final class PainPointsScreenViewModel {
     /// Whether the continue button should be enabled
     var canContinue: Bool = false
     
+    /// Whether this screen is currently active for animations
+    var isActive: Bool = false
+    
     // MARK: - Computed Properties
     
     /// Available pain point options
@@ -104,6 +107,18 @@ final class PainPointsScreenViewModel {
         } else {
             onboardingService.nextStep()
         }
+    }
+    
+    /// Update the active state for animation control
+    /// - Parameter isActive: Whether this screen is currently active
+    func updateActiveState(_ isActive: Bool) {
+        self.isActive = isActive
+    }
+    
+    /// Start animations for this screen
+    func startAnimations() {
+        guard isActive else { return }
+        // Animation implementation will be added here when needed
     }
     
     // MARK: - Private Methods

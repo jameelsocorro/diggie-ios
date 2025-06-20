@@ -75,6 +75,16 @@ struct PainPointsScreen: View {
             }
             .padding(.bottom)
         }
+        .onAppear {
+            if viewModel.isActive {
+                viewModel.startAnimations()
+            }
+        }
+        .onChange(of: viewModel.isActive) { _, isActive in
+            if isActive {
+                viewModel.startAnimations()
+            }
+        }
     }
 }
 

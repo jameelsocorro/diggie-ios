@@ -46,32 +46,28 @@ struct OnboardingFlowView: View {
                     .padding(.horizontal)
                     .padding(.top)
                     
-                    // Sliding container for smooth navigation
-                    GeometryReader { geometry in
-                        HStack(spacing: 0) {
-                            // Step 1: Platform Selection
+                    // Current step content (lazy loaded)
+                    Group {
+                        switch viewModel.currentStep {
+                        case 1:
                             PlatformSelectionScreen(viewModel: viewModel.platformSelectionViewModel)
-                                .frame(width: geometry.size.width)
-                            
-                            // Step 2: Posting Frequency
+                        case 2:
                             PostingFrequencyScreen(viewModel: viewModel.postingFrequencyViewModel)
-                                .frame(width: geometry.size.width)
-                            
-                            // Step 3: Content Type
+                        case 3:
                             ContentTypeScreen(viewModel: viewModel.contentTypeViewModel)
-                                .frame(width: geometry.size.width)
-                            
-                            // Step 4: Pain Points
+                        case 4:
                             PainPointsScreen(viewModel: viewModel.painPointsViewModel)
-                                .frame(width: geometry.size.width)
-                            
-                            // Step 5: Pricing
+                        case 5:
                             PricingScreen(viewModel: viewModel.pricingViewModel)
-                                .frame(width: geometry.size.width)
+                        default:
+                            PlatformSelectionScreen(viewModel: viewModel.platformSelectionViewModel)
                         }
-                        .offset(x: viewModel.slideOffset)
-                        .animation(.easeInOut(duration: 0.4), value: viewModel.slideOffset)
                     }
+                    .transition(.asymmetric(
+                        insertion: .move(edge: .trailing).combined(with: .opacity),
+                        removal: .move(edge: .leading).combined(with: .opacity)
+                    ))
+                    .animation(.easeInOut(duration: 0.4), value: viewModel.currentStep)
                 }
             }
         }

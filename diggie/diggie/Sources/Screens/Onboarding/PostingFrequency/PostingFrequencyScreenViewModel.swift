@@ -39,6 +39,9 @@ final class PostingFrequencyScreenViewModel {
     
     /// Whether the continue button is visible
     var stepIndicatorVisible: Bool = false
+    
+    /// Whether this screen is currently active
+    var isActive: Bool = false
 
     // MARK: - Computed Properties
     
@@ -103,8 +106,14 @@ final class PostingFrequencyScreenViewModel {
         }
     }
 
+    /// Called when screen appears (but may not be active yet)
+    func onScreenAppeared() {
+        // Just mark that screen has appeared, don't start animations yet
+    }
+    
     /// Start the entrance animations with staggered timing
-    func startAnimations() {        
+    func startAnimations() {
+        guard isActive else { return }
         
         withAnimation(.easeOut(duration: 0.2)) {
             headerVisible = true
@@ -129,6 +138,11 @@ final class PostingFrequencyScreenViewModel {
         withAnimation(.easeOut(duration: 0.5).delay(0.3)) {
             stepIndicatorVisible = true
         }
+    }
+    
+    /// Update active state from parent flow
+    func updateActiveState(_ isActive: Bool) {
+        self.isActive = isActive
     }
     
     // MARK: - Private Methods

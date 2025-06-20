@@ -43,6 +43,9 @@ final class PlatformSelectionScreenViewModel {
     /// Controls continue button section animation visibility
     var continueButtonVisible: Bool = false
     
+    /// Whether this screen is currently active
+    var isActive: Bool = false
+    
     // MARK: - Computed Properties
     
     /// Available platforms for selection
@@ -109,8 +112,8 @@ final class PlatformSelectionScreenViewModel {
     }
     
     /// Start the entrance animations with staggered timing
-    func startAnimations() {        
-        
+    func startAnimations() {
+        guard isActive else { return }
         
         withAnimation(.easeOut(duration: 0.2)) {
             headerVisible = true
@@ -135,6 +138,11 @@ final class PlatformSelectionScreenViewModel {
         withAnimation(.easeOut(duration: 0.5).delay(0.3)) {
             continueButtonVisible = true
         }
+    }
+    
+    /// Update active state from parent flow
+    func updateActiveState(_ isActive: Bool) {
+        self.isActive = isActive
     }
     
     // MARK: - Private Methods

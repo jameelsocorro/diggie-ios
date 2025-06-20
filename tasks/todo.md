@@ -1,48 +1,35 @@
-# Onboarding ViewModels Update Plan
+# Update Onboarding Screens with .onAppear Handlers
 
-## Task: Update onboarding screen ViewModels to accept navigateForward callback
+## Overview
+Add `.onAppear` handlers to the remaining three onboarding screens to ensure animations trigger when the screen first appears if it's already active.
 
-Based on the analysis of the current implementations, I need to update 4 ViewModels to match the pattern established in `PlatformSelectionScreenViewModel`.
+## Tasks
 
-## Current State Analysis
+### ContentTypeScreen
+- [ ] Add `.onAppear` handler before the existing `.onChange(of: viewModel.isActive)` handler
+- [ ] Follow the pattern: check if `viewModel.isActive` and call `viewModel.startAnimations()`
 
-**PlatformSelectionScreenViewModel (✅ Already Updated):**
-- Constructor: `init(onboardingService: OnboardingService, navigateForward: (() -> Void)? = nil)`
-- Has private `navigateForward` property
-- `continueToNextStep()` uses callback if available, falls back to service
+### PainPointsScreen  
+- [ ] Add `.onAppear` handler before the existing `.onChange(of: viewModel.isActive)` handler
+- [ ] Follow the pattern: check if `viewModel.isActive` and call `viewModel.startAnimations()`
 
-**ViewModels to Update:**
-1. **PostingFrequencyScreenViewModel** - Missing navigateForward pattern
-2. **ContentTypeScreenViewModel** - Missing navigateForward pattern  
-3. **PainPointsScreenViewModel** - Missing navigateForward pattern
-4. **PricingScreenViewModel** - Missing navigateForward pattern (special case - has multiple completion methods)
-
-## Todo Items
-
-- [ ] Update PostingFrequencyScreenViewModel constructor and continueToNextStep method
-- [ ] Update ContentTypeScreenViewModel constructor and continueToNextStep method
-- [ ] Update PainPointsScreenViewModel constructor and continueToNextStep method
-- [ ] Update PricingScreenViewModel constructor and completion methods (selectEarlyBird, selectFreeTier, selectMaybeLater)
+### PricingScreen
+- [ ] Add `.onAppear` handler before the existing `.onChange(of: viewModel.isActive)` handler
+- [ ] Follow the pattern: check if `viewModel.isActive` and call `viewModel.startAnimations()`
 
 ## Implementation Details
+Each screen needs this exact pattern added:
+```swift
+.onAppear {
+    if viewModel.isActive {
+        viewModel.startAnimations()
+    }
+}
+```
 
-For each ViewModel (except PricingScreenViewModel):
-1. Add optional `navigateForward: (() -> Void)? = nil` parameter to constructor
-2. Store as private property 
-3. Update `continueToNextStep()` method to check for callback first, fallback to service
+This should be placed before the existing `.onChange(of: viewModel.isActive)` handler to maintain consistency with other onboarding screens.
 
-For PricingScreenViewModel:
-1. Add optional `navigateForward: (() -> Void)? = nil` parameter to constructor
-2. Store as private property
-3. Update `completeOnboarding()` method to use callback if available, fallback to service
-
-## Expected Changes Summary
-
-Each updated ViewModel will:
-- Accept an optional navigation callback in the constructor
-- Use the callback for navigation when provided
-- Maintain backward compatibility with existing code
-- Follow the same pattern as PlatformSelectionScreenViewModel
-
-## Review Section
-(To be completed after implementation)
+## Files to Modify
+- `/Users/jameelsocorro/Documents/Github/diggie-ios/Diggie/Diggie/Sources/Screens/Onboarding/ContentType/ContentTypeScreen.swift`
+- `/Users/jameelsocorro/Documents/Github/diggie-ios/Diggie/Diggie/Sources/Screens/Onboarding/PainPoints/PainPointsScreen.swift`
+- `/Users/jameelsocorro/Documents/Github/diggie-ios/Diggie/Diggie/Sources/Screens/Onboarding/Pricing/PricingScreen.swift`

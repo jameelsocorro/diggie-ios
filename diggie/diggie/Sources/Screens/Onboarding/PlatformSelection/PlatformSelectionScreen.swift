@@ -76,7 +76,14 @@ struct PlatformSelectionScreen: View {
             .scaleEffect(viewModel.continueButtonVisible ? 1 : 0.9)
         }
         .onAppear {
-            viewModel.startAnimations()
+            if viewModel.isActive {
+                viewModel.startAnimations()
+            }
+        }
+        .onChange(of: viewModel.isActive) { _, isActive in
+            if isActive {
+                viewModel.startAnimations()
+            }
         }
     }
 }

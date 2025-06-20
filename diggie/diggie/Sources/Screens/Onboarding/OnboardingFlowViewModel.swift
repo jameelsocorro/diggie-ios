@@ -25,9 +25,6 @@ final class OnboardingFlowViewModel {
 
     // MARK: - Published Properties
     
-    /// Current slide offset for smooth transitions
-    var slideOffset: CGFloat = 0
-    
     // MARK: - Persistent ViewModels
     
     /// Platform selection ViewModel (Step 1)
@@ -96,7 +93,7 @@ final class OnboardingFlowViewModel {
     
     /// Initialize the onboarding flow ViewModel
     init() {
-        updateSlideOffset()
+        updateActiveScreens()
         
         // Prepare haptic feedback generators for optimal performance
         softImpactGenerator.prepare()
@@ -108,7 +105,7 @@ final class OnboardingFlowViewModel {
     func navigateBackward() {
         guard canGoBack else { return }
         onboardingService.previousStep()
-        updateSlideOffset()
+        updateActiveScreens()
         softImpactGenerator.impactOccurred()
     }
     
@@ -124,12 +121,32 @@ final class OnboardingFlowViewModel {
     private func navigateForward() {
         guard onboardingService.canProceedFromCurrentStep && currentStep < 5 else { return }
         onboardingService.nextStep()
-        updateSlideOffset()
+        updateActiveScreens()
     }
     
-    /// Update slide offset based on current step
-    private func updateSlideOffset() {
-        let screenWidth = UIScreen.main.bounds.width
-        slideOffset = -CGFloat(currentStep - 1) * screenWidth
+    /// Update which screen is currently active
+    private func updateActiveScreens() {
+        // Reset all created screens to inactive
+        _platformSelectionViewModel?.updateActiveState(false)
+        _postingFrequencyViewModel?.updateActiveState(false)
+        _contentTypeViewModel?.updateActiveState(false)
+        _painPointsViewModel?.updateActiveState(false)
+        _pricingViewModel?.updateActiveState(false)
+        
+        // Set current screen as active (this will create it if needed)
+        switch currentStep {
+        case 1:
+            platformSelectionViewModel.updateActiveState(true)
+        case 2:
+            postingFrequencyViewModel.updateActiveState(true)
+        case 3:
+            contentTypeViewModel.updateActiveState(true)
+        case 4:
+            painPointsViewModel.updateActiveState(true)
+        case 5:
+            pricingViewModel.updateActiveState(true)
+        default:
+            break
+        }
     }
 }
