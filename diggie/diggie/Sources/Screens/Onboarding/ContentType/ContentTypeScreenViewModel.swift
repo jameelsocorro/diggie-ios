@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 /// ViewModel for Content Type screen (Onboarding Step 3)
 @Observable
@@ -17,6 +18,11 @@ final class ContentTypeScreenViewModel {
     private let onboardingService: OnboardingService
     private let navigateForward: (() -> Void)?
     
+    // MARK: - Haptic Feedback
+    
+    /// Haptic feedback generators (prepared for optimal performance)
+    private let softImpactGenerator = UIImpactFeedbackGenerator(style: .soft)
+    
     // MARK: - Published Properties
     
     /// Currently selected content types
@@ -27,6 +33,15 @@ final class ContentTypeScreenViewModel {
     
     /// Whether this screen is currently active for animations
     var isActive: Bool = false
+    
+    /// Whether the header is visible
+    var headerVisible: Bool = false
+    
+    /// Whether the content type options are visible
+    var contentTypesVisible: Bool = false
+    
+    /// Whether the step indicator is visible
+    var stepIndicatorVisible: Bool = false
     
     // MARK: - Computed Properties
     
@@ -55,6 +70,7 @@ final class ContentTypeScreenViewModel {
         self.onboardingService = onboardingService
         self.navigateForward = navigateForward
         loadExistingData()
+        softImpactGenerator.prepare()
     }
     
     // MARK: - Public Methods
@@ -67,6 +83,7 @@ final class ContentTypeScreenViewModel {
         } else {
             selectedContentTypes.insert(contentType)
         }
+        softImpactGenerator.impactOccurred()
         updateContinueState()
         syncWithService()
     }
@@ -97,7 +114,30 @@ final class ContentTypeScreenViewModel {
     /// Start animations for this screen
     func startAnimations() {
         guard isActive else { return }
-        // Animation implementation will be added here when needed
+        
+        withAnimation(.easeOut(duration: 0.2)) {
+            headerVisible = true
+        }
+      
+        // Schedule haptic feedback for when content type buttons animation starts
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.softImpactGenerator.impactOccurred()
+        }
+
+        // Content type buttons animation - 0.3s delay + 0.3s duration = finishes at 0.6s
+        withAnimation(.easeOut(duration: 0.3).delay(0.3)) {
+            contentTypesVisible = true
+        }
+                    
+        // Schedule haptic feedback for when step indicator animation starts
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.softImpactGenerator.impactOccurred()
+        }
+
+        // Step indicator animation - 0.5s delay + 0.5s duration = finishes at 1.0s
+        withAnimation(.easeOut(duration: 0.5).delay(0.5)) {
+            stepIndicatorVisible = true
+        }
     }
     
     // MARK: - Private Methods

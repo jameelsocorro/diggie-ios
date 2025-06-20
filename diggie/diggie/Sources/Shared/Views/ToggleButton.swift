@@ -10,6 +10,7 @@ import SwiftUI
 /// A reusable toggle button component that can display an icon and text with selection states
 struct ToggleButton: View {
     let title: String
+    let description: String?
     let icon: ToggleButtonIcon?
     let isSelected: Bool
     let configuration: ToggleButtonConfiguration
@@ -17,12 +18,14 @@ struct ToggleButton: View {
     
     init(
         title: String,
+        description: String? = nil,
         icon: ToggleButtonIcon? = nil,
         isSelected: Bool,
         configuration: ToggleButtonConfiguration = .default,
         action: @escaping () -> Void
     ) {
         self.title = title
+        self.description = description
         self.icon = icon
         self.isSelected = isSelected
         self.configuration = configuration
@@ -54,11 +57,21 @@ struct ToggleButton: View {
                     }
                 }
                 
-                Text(title)
-                    .font(configuration.textFont)
-                    .fontWeight(.medium)
-                    .foregroundColor(isSelected ? configuration.selectedTextColor : configuration.textColor)
-                    .lineLimit(1)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(title)
+                        .font(configuration.textFont)
+                        .fontWeight(.medium)
+                        .foregroundColor(isSelected ? configuration.selectedTextColor : configuration.textColor)
+                        .lineLimit(1)
+                    
+                    if let description = description {
+                        Text(description)
+                            .font(configuration.descriptionFont)
+                            .foregroundColor(isSelected ? configuration.selectedDescriptionColor : configuration.descriptionColor)
+                            .lineLimit(nil)
+                            .multilineTextAlignment(.leading)
+                    }
+                }
                 
                 if configuration.expandToFillWidth {
                     Spacer()
@@ -95,6 +108,9 @@ struct ToggleButtonConfiguration {
     let textFont: Font
     let textColor: Color
     let selectedTextColor: Color
+    let descriptionFont: Font
+    let descriptionColor: Color
+    let selectedDescriptionColor: Color
     let iconColor: Color
     let selectedIconColor: Color
     let backgroundColor: Color
@@ -114,6 +130,9 @@ struct ToggleButtonConfiguration {
         textFont: Font = .subheadline,
         textColor: Color = .white,
         selectedTextColor: Color = .white,
+        descriptionFont: Font = .caption,
+        descriptionColor: Color = Color.white.opacity(0.7),
+        selectedDescriptionColor: Color = Color.white.opacity(0.9),
         iconColor: Color = .white,
         selectedIconColor: Color = .white,
         backgroundColor: Color = Color.gray.opacity(0.3),
@@ -132,6 +151,9 @@ struct ToggleButtonConfiguration {
         self.textFont = textFont
         self.textColor = textColor
         self.selectedTextColor = selectedTextColor
+        self.descriptionFont = descriptionFont
+        self.descriptionColor = descriptionColor
+        self.selectedDescriptionColor = selectedDescriptionColor
         self.iconColor = iconColor
         self.selectedIconColor = selectedIconColor
         self.backgroundColor = backgroundColor
@@ -160,6 +182,9 @@ extension ToggleButtonConfiguration {
         textFont: .headline,
         textColor: .primary,
         selectedTextColor: .primary,
+        descriptionFont: .subheadline,
+        descriptionColor: .secondary,
+        selectedDescriptionColor: .secondary,
         iconColor: .primary,
         selectedIconColor: .primary,
         borderColor: .clear,
@@ -194,6 +219,7 @@ extension ToggleButtonConfiguration {
         // Full width preset configuration (frequency style)
         ToggleButton(
             title: "Daily",
+            description: "Post content every day to stay top of mind",
             isSelected: false,
             configuration: .fullWidth
         ) {
@@ -202,6 +228,7 @@ extension ToggleButtonConfiguration {
         
         ToggleButton(
             title: "Few times a week",
+            description: "Balance consistency with quality content creation",
             isSelected: true,
             configuration: .fullWidth
         ) {

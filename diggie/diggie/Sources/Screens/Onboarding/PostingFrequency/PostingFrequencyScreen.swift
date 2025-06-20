@@ -21,7 +21,7 @@ struct PostingFrequencyScreen: View {
                 Text("How often do you post?")
                     .font(.largeTitle)
                     .fontWeight(.bold)
-                    .frame(maxWidth: 300, alignment: .leading)
+                    .frame(maxWidth: 200, alignment: .leading)
                 
                 Text("This helps me understand your workflow.")
                     .font(.subheadline)

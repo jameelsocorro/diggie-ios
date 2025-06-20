@@ -14,36 +14,43 @@ struct ContentTypeScreen: View {
     
     var body: some View {
         VStack(spacing: 24) {
-            Spacer()
+            Spacer().frame(height: 24)
             
             // Header
-            VStack(spacing: 12) {
+            VStack(alignment: .leading, spacing: 12) {
                 Text("What do you create?")
                     .font(.largeTitle)
                     .fontWeight(.bold)
-                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: 200, alignment: .leading)
                 
                 Text("This helps me build the right tools for you.")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
-                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: 300, alignment: .leading)
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal)
+            .opacity(viewModel.headerVisible ? 1 : 0)
+
             
             Spacer()
             
             // Content type options
             VStack(spacing: 16) {
                 ForEach(viewModel.availableContentTypes) { contentType in
-                    ContentTypeButton(
-                        contentType: contentType,
-                        isSelected: viewModel.isContentTypeSelected(contentType)
+                    ToggleButton(
+                        title: contentType.displayName,
+                        description: contentType.description,
+                        isSelected: viewModel.isContentTypeSelected(contentType),
+                        configuration: .fullWidth
                     ) {
                         viewModel.toggleContentType(contentType)
                     }
                 }
             }
             .padding(.horizontal)
+            .opacity(viewModel.contentTypesVisible ? 1 : 0)
+            .offset(y: viewModel.contentTypesVisible ? 0 : 50)
             
             Spacer()
             
@@ -65,6 +72,9 @@ struct ContentTypeScreen: View {
                     .foregroundColor(.secondary)
             }
             .padding(.bottom)
+            .opacity(viewModel.stepIndicatorVisible ? 1 : 0)
+            .offset(y: viewModel.stepIndicatorVisible ? 0 : 30)
+            .scaleEffect(viewModel.stepIndicatorVisible ? 1 : 0.9)
         }
         .onAppear {
             if viewModel.isActive {
