@@ -33,7 +33,7 @@ struct ContentTypeScreen: View {
             .opacity(viewModel.headerVisible ? 1 : 0)
 
             
-            Spacer()
+            Spacer().frame(height: 24)
             
             // Content type options
             VStack(spacing: 16) {

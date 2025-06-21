@@ -32,7 +32,7 @@ struct PostingFrequencyScreen: View {
             .padding(.horizontal)
             .opacity(viewModel.headerVisible ? 1 : 0)
             
-            Spacer()
+            Spacer().frame(height: 24)
             
             // Frequency options
             VStack(spacing: 16) {

@@ -32,7 +32,6 @@ struct PlatformSelectionScreen: View {
             .padding(.horizontal)
             .opacity(viewModel.headerVisible ? 1 : 0)
             
-            Spacer()
             
             // Platform options with slide up + fade animation
             FlexWrapLayout(spacing: 8) {
@@ -91,5 +90,7 @@ struct PlatformSelectionScreen: View {
 #Preview {
     let service = OnboardingService()
     let viewModel = PlatformSelectionScreenViewModel(onboardingService: service)
+    viewModel.isActive = true
+    viewModel.startAnimations()
     return PlatformSelectionScreen(viewModel: viewModel)
 }

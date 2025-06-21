@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 /// ViewModel for Pain Points screen (Onboarding Step 4)
 @Observable
@@ -17,6 +18,11 @@ final class PainPointsScreenViewModel {
     private let onboardingService: OnboardingService
     private let navigateForward: (() -> Void)?
     
+    // MARK: - Haptic Feedback
+    
+    /// Haptic feedback generators (prepared for optimal performance)
+    private let softImpactGenerator = UIImpactFeedbackGenerator(style: .soft)
+    
     // MARK: - Published Properties
     
     /// Currently selected pain points (max 2)
@@ -27,6 +33,18 @@ final class PainPointsScreenViewModel {
     
     /// Whether this screen is currently active for animations
     var isActive: Bool = false
+    
+    /// Whether the header is visible
+    var headerVisible: Bool = false
+    
+    /// Whether the pain point options are visible
+    var painPointsVisible: Bool = false
+    
+    /// Whether the guidance text is visible
+    var guidanceVisible: Bool = false
+    
+    /// Whether the step indicator is visible
+    var stepIndicatorVisible: Bool = false
     
     // MARK: - Computed Properties
     
@@ -47,9 +65,14 @@ final class PainPointsScreenViewModel {
     
     /// Selection guidance text
     var selectionGuidance: String {
-        if selectedPainPoints.count < 2 {
+        switch selectedPainPoints.count {
+        case 0:
             return "Select up to 2 challenges"
-        } else {
+        case 1:
+            return "Select 1 more challenge (optional)"
+        case 2:
+            return "Great! You've selected 2 challenges"
+        default:
             return ""
         }
     }
@@ -69,6 +92,7 @@ final class PainPointsScreenViewModel {
         self.onboardingService = onboardingService
         self.navigateForward = navigateForward
         loadExistingData()
+        softImpactGenerator.prepare()
     }
     
     // MARK: - Public Methods
@@ -81,6 +105,7 @@ final class PainPointsScreenViewModel {
         } else if selectedPainPoints.count < 2 {
             selectedPainPoints.insert(painPoint)
         }
+        softImpactGenerator.impactOccurred()
         updateContinueState()
         syncWithService()
     }
@@ -118,7 +143,35 @@ final class PainPointsScreenViewModel {
     /// Start animations for this screen
     func startAnimations() {
         guard isActive else { return }
-        // Animation implementation will be added here when needed
+        
+        withAnimation(.easeOut(duration: 0.2)) {
+            headerVisible = true
+        }
+      
+        // Schedule haptic feedback for when pain point buttons animation starts
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.softImpactGenerator.impactOccurred()
+        }
+
+        // Pain point buttons animation - 0.3s delay + 0.3s duration = finishes at 0.6s
+        withAnimation(.easeOut(duration: 0.3).delay(0.3)) {
+            painPointsVisible = true
+        }
+        
+        // Guidance text animation - 0.4s delay + 0.2s duration = finishes at 0.6s
+        withAnimation(.easeOut(duration: 0.2).delay(0.4)) {
+            guidanceVisible = true
+        }
+                    
+        // Schedule haptic feedback for when step indicator animation starts
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.softImpactGenerator.impactOccurred()
+        }
+
+        // Step indicator animation - 0.5s delay + 0.5s duration = finishes at 1.0s
+        withAnimation(.easeOut(duration: 0.5).delay(0.5)) {
+            stepIndicatorVisible = true
+        }
     }
     
     // MARK: - Private Methods

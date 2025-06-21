@@ -14,45 +14,51 @@ struct PainPointsScreen: View {
     
     var body: some View {
         VStack(spacing: 24) {
-            Spacer()
+            Spacer().frame(height: 24)
             
             // Header
-            VStack(spacing: 12) {
+            VStack(alignment: .leading, spacing: 12) {
                 Text("What's your biggest challenge?")
                     .font(.largeTitle)
                     .fontWeight(.bold)
-                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: 300, alignment: .leading)
                 
                 Text("This helps me solve your most important problems first.")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
-                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: 300, alignment: .leading)
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal)
+            .opacity(viewModel.headerVisible ? 1 : 0)
             
-            Spacer()
+            Spacer().frame(height: 24)
             
             // Pain point options
             VStack(spacing: 16) {
                 ForEach(viewModel.availablePainPoints) { painPoint in
-                    PainPointButton(
-                        painPoint: painPoint,
+                    ToggleButton(
+                        title: painPoint.displayName,
+                        description: painPoint.description,
                         isSelected: viewModel.isPainPointSelected(painPoint),
-                        isDisabled: viewModel.isPainPointDisabled(painPoint)
+                        configuration: .fullWidth
                     ) {
                         viewModel.togglePainPoint(painPoint)
                     }
+                    .disabled(viewModel.isPainPointDisabled(painPoint))
+                    .opacity(viewModel.isPainPointDisabled(painPoint) ? 0.5 : 1.0)
                 }
             }
             .padding(.horizontal)
+            .opacity(viewModel.painPointsVisible ? 1 : 0)
+            .offset(y: viewModel.painPointsVisible ? 0 : 50)
             
-            // Selection guidance
-            if viewModel.shouldShowGuidance {
-                Text(viewModel.selectionGuidance)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                    .padding(.horizontal)
-            }
+            Text(viewModel.selectionGuidance)
+                .font(.caption)
+                .foregroundColor(.secondary)
+                .padding(.horizontal)
+                .opacity(viewModel.guidanceVisible ? 1 : 0)
+                .offset(y: viewModel.guidanceVisible ? 0 : 20)
             
             Spacer()
             
@@ -74,6 +80,9 @@ struct PainPointsScreen: View {
                     .foregroundColor(.secondary)
             }
             .padding(.bottom)
+            .opacity(viewModel.stepIndicatorVisible ? 1 : 0)
+            .offset(y: viewModel.stepIndicatorVisible ? 0 : 30)
+            .scaleEffect(viewModel.stepIndicatorVisible ? 1 : 0.9)
         }
         .onAppear {
             if viewModel.isActive {
