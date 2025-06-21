@@ -25,6 +25,12 @@ final class OnboardingFlowViewModel {
 
     // MARK: - Published Properties
     
+    /// Tracks which steps have been initialized for sliding window
+    var initializedSteps: Set<Int> = [1]
+    
+    /// Tracks navigation direction for proper animation
+    var isNavigatingBackward: Bool = false
+    
     // MARK: - Persistent ViewModels
     
     /// Platform selection ViewModel (Step 1)
@@ -89,6 +95,16 @@ final class OnboardingFlowViewModel {
         currentStep > 1
     }
     
+    /// Current step's index in the initialized steps array
+    var currentStepIndex: Int {
+        Array(initializedSteps).sorted().firstIndex(of: currentStep) ?? 0
+    }
+    
+    /// Container offset for sliding window animation
+    func containerOffset(screenWidth: CGFloat) -> CGFloat {
+        -screenWidth * CGFloat(currentStepIndex)
+    }
+    
     // MARK: - Initialization
     
     /// Initialize the onboarding flow ViewModel
@@ -104,6 +120,14 @@ final class OnboardingFlowViewModel {
     /// Navigate to previous step with proper animation
     func navigateBackward() {
         guard canGoBack else { return }
+        isNavigatingBackward = true
+        
+        // Add previous step to initialized set if not already present
+        let previousStep = currentStep - 1
+        if previousStep > 0 {
+            initializedSteps.insert(previousStep)
+        }
+        
         onboardingService.previousStep()
         updateActiveScreens()
         softImpactGenerator.impactOccurred()
@@ -120,6 +144,12 @@ final class OnboardingFlowViewModel {
     /// Navigate to next step with proper animation
     private func navigateForward() {
         guard onboardingService.canProceedFromCurrentStep && currentStep < 5 else { return }
+        isNavigatingBackward = false
+        
+        // Add next step to initialized set before navigation
+        let nextStep = currentStep + 1
+        initializedSteps.insert(nextStep)
+        
         onboardingService.nextStep()
         updateActiveScreens()
     }

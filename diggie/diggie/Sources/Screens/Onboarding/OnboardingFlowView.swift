@@ -46,33 +46,42 @@ struct OnboardingFlowView: View {
                     .padding(.horizontal)
                     .padding(.top)
                     
-                    // Current step content (lazy loaded)
-                    Group {
-                        switch viewModel.currentStep {
-                        case 1:
-                            PlatformSelectionScreen(viewModel: viewModel.platformSelectionViewModel)
-                        case 2:
-                            PostingFrequencyScreen(viewModel: viewModel.postingFrequencyViewModel)
-                        case 3:
-                            ContentTypeScreen(viewModel: viewModel.contentTypeViewModel)
-                        case 4:
-                            PainPointsScreen(viewModel: viewModel.painPointsViewModel)
-                        case 5:
-                            PricingScreen(viewModel: viewModel.pricingViewModel)
-                        default:
-                            PlatformSelectionScreen(viewModel: viewModel.platformSelectionViewModel)
+                    // Sliding window container
+                    GeometryReader { geometry in
+                        HStack(spacing: 0) {
+                            ForEach(Array(viewModel.initializedSteps).sorted(), id: \.self) { step in
+                                screenView(for: step)
+                                    .frame(width: geometry.size.width)
+                            }
                         }
+                        .offset(x: viewModel.containerOffset(screenWidth: geometry.size.width))
+                        .animation(.easeInOut(duration: 0.4), value: viewModel.currentStep)
                     }
-                    .transition(.asymmetric(
-                        insertion: .move(edge: .trailing).combined(with: .opacity),
-                        removal: .move(edge: .leading).combined(with: .opacity)
-                    ))
-                    .animation(.easeInOut(duration: 0.4), value: viewModel.currentStep)
+                    .clipped()
                 }
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: .onboardingCompleted)) { _ in
             appViewModel.navigateToScreen(.main)
+        }
+    }
+    
+    /// Returns the appropriate screen view for the given step
+    @ViewBuilder
+    private func screenView(for step: Int) -> some View {
+        switch step {
+        case 1:
+            PlatformSelectionScreen(viewModel: viewModel.platformSelectionViewModel)
+        case 2:
+            PostingFrequencyScreen(viewModel: viewModel.postingFrequencyViewModel)
+        case 3:
+            ContentTypeScreen(viewModel: viewModel.contentTypeViewModel)
+        case 4:
+            PainPointsScreen(viewModel: viewModel.painPointsViewModel)
+        case 5:
+            PricingScreen(viewModel: viewModel.pricingViewModel)
+        default:
+            PlatformSelectionScreen(viewModel: viewModel.platformSelectionViewModel)
         }
     }
 }

@@ -21,7 +21,7 @@ struct PainPointsScreen: View {
                 Text("What's your biggest challenge?")
                     .font(.largeTitle)
                     .fontWeight(.bold)
-                    .frame(maxWidth: 300, alignment: .leading)
+                    .frame(maxWidth: 350, alignment: .leading)
                 
                 Text("This helps me solve your most important problems first.")
                     .font(.subheadline)
