@@ -69,13 +69,13 @@ final class OnboardingFlowViewModel {
         return _painPointsViewModel!
     }
     
-    /// Pricing ViewModel (Step 5)
-    private var _pricingViewModel: PricingScreenViewModel?
-    var pricingViewModel: PricingScreenViewModel {
-        if _pricingViewModel == nil {
-            _pricingViewModel = PricingScreenViewModel(onboardingService: onboardingService)
+    /// OS Preference ViewModel (Step 5)
+    private var _osPreferenceViewModel: OSPreferenceScreenViewModel?
+    var osPreferenceViewModel: OSPreferenceScreenViewModel {
+        if _osPreferenceViewModel == nil {
+            _osPreferenceViewModel = OSPreferenceScreenViewModel(onboardingService: onboardingService)
         }
-        return _pricingViewModel!
+        return _osPreferenceViewModel!
     }
     
     // MARK: - Computed Properties
@@ -161,7 +161,7 @@ final class OnboardingFlowViewModel {
         _postingFrequencyViewModel?.updateActiveState(false)
         _contentTypeViewModel?.updateActiveState(false)
         _painPointsViewModel?.updateActiveState(false)
-        _pricingViewModel?.updateActiveState(false)
+        _osPreferenceViewModel?.updateActiveState(false)
         
         // Set current screen as active (this will create it if needed)
         switch currentStep {
@@ -174,7 +174,7 @@ final class OnboardingFlowViewModel {
         case 4:
             painPointsViewModel.updateActiveState(true)
         case 5:
-            pricingViewModel.updateActiveState(true)
+            osPreferenceViewModel.updateActiveState(true)
         default:
             break
         }

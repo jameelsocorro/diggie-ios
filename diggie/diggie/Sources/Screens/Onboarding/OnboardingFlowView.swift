@@ -79,7 +79,7 @@ struct OnboardingFlowView: View {
         case 4:
             PainPointsScreen(viewModel: viewModel.painPointsViewModel)
         case 5:
-            PricingScreen(viewModel: viewModel.pricingViewModel)
+            OSPreferenceScreen(viewModel: viewModel.osPreferenceViewModel)
         default:
             PlatformSelectionScreen(viewModel: viewModel.platformSelectionViewModel)
         }

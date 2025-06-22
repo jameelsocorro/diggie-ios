@@ -46,11 +46,12 @@
    - **Options**: Time management, Consistency, Content ideas, Writing quality, Formatting, Growth, Strategy, Tools
    - Problem validation and solution prioritization
 
-   #### Screen 5: Value Proposition & Pricing
+   #### Screen 5: OS Support Priority
 
-   - Personalized messaging based on previous answers
-   - Early bird offer with targeted benefits
-   - Premium tier validation
+   - **Question**: "Which OS should we support next?"
+   - **Subtitle**: _This helps us prioritize our development roadmap_
+   - **Options**: iPadOS, macOS
+   - User research data for platform expansion priorities
 
 2. **Account Management**
 

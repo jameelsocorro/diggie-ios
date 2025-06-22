@@ -26,11 +26,11 @@ I recommend checking the @.cursorrules for guidelines
 
 ##### Acceptance Criteria:
 
-- [ ] Branding is consistent with launch screen
-- [ ] Value proposition is clear and compelling
-- [ ] CTA button is prominent and easily tappable
-- [ ] Smooth transition to onboarding flow
-- [ ] Text is readable and well-positioned
+- [x] Branding is consistent with launch screen
+- [x] Value proposition is clear and compelling
+- [x] CTA button is prominent and easily tappable
+- [x] Smooth transition to onboarding flow
+- [x] Text is readable and well-positioned
 
 ---
 
@@ -63,11 +63,11 @@ I recommend checking the @.cursorrules for guidelines
 
 ##### Acceptance Criteria:
 
-- [ ] All 5 target platforms are displayed as options
-- [ ] Multiple selection is supported
-- [ ] Visual feedback on selection (button state change)
-- [ ] Progress bar shows 20% completion
-- [ ] Continue button enabled after at least one selection
+- [x] All 5 target platforms are displayed as options
+- [x] Multiple selection is supported
+- [x] Visual feedback on selection (button state change)
+- [x] Progress bar shows 20% completion
+- [x] Continue button enabled after at least one selection
 
 #### Screen 2: Posting Frequency (@specs/ui-mockups/onboarding-2.png)
 
@@ -89,11 +89,11 @@ I recommend checking the @.cursorrules for guidelines
 
 ##### Acceptance Criteria:
 
-- [ ] All 5 frequency options are displayed
-- [ ] Single selection behavior (radio button style)
-- [ ] Visual feedback on selection
-- [ ] Progress bar shows 40% completion
-- [ ] Continue button enabled after selection
+- [x] All 5 frequency options are displayed
+- [x] Single selection behavior (radio button style)
+- [x] Visual feedback on selection
+- [x] Progress bar shows 40% completion
+- [x] Continue button enabled after selection
 
 #### Screen 3: Content Type (@specs/ui-mockups/onboarding-3.png)
 
@@ -113,11 +113,11 @@ I recommend checking the @.cursorrules for guidelines
 
 ##### Acceptance Criteria:
 
-- [ ] All 3 content types are displayed with descriptions
-- [ ] Multiple selection is supported
-- [ ] Visual feedback on selection
-- [ ] Progress bar shows 60% completion
-- [ ] Continue button enabled after at least one selection
+- [x] All 3 content types are displayed with descriptions
+- [x] Multiple selection is supported
+- [x] Visual feedback on selection
+- [x] Progress bar shows 60% completion
+- [x] Continue button enabled after at least one selection
 
 #### Screen 4: Pain Points (@specs/ui-mockups/onboarding-4.png)
 
@@ -139,34 +139,36 @@ I recommend checking the @.cursorrules for guidelines
 
 ##### Acceptance Criteria:
 
-- [ ] All 5 pain points are displayed with descriptions
-- [ ] Maximum 2 selections allowed
-- [ ] Visual feedback on selection
-- [ ] Progress bar shows 80% completion
-- [ ] Continue button enabled after at least one selection
+- [x] All 5 pain points are displayed with descriptions
+- [x] Maximum 2 selections allowed
+- [x] Visual feedback on selection
+- [x] Progress bar shows 80% completion
+- [x] Continue button enabled after at least one selection
 
-#### Screen 5: Pricing & Value Proposition (Revenue Cat Paywall)
+#### Screen 5: OS Support Priority
 
-**User Story**: As a potential customer, I want to understand the pricing and value proposition so I can decide whether to continue with the free tier or sign up for early bird pricing.
+**User Story**: As a user, I want to indicate which OS platform should be supported next so the app can prioritize development based on user demand.
 
 ##### Actionable Steps:
 
-1. Show personalized message based on previous answers
-2. Display current free offering (Threads and Bluesky)
-3. Present early bird offer: "$7.99/month forever (47% off)"
-4. Show regular premium price: "$14.99/month"
-5. List premium benefits based on user's content type and pain points
-6. Present options: "Join Early Bird" / "Start Free" / "Maybe Later"
-7. Integrate RevenueCat paywall for subscription handling
-8. Complete progress indicator to 100%
+1. Display question: "Which OS should we support next?"
+2. Show subtitle: "This helps us prioritize our development roadmap."
+3. Present OS options as toggle buttons (same style as Screen 2):
+   - iPadOS
+   - macOS
+4. Allow single selection only (radio button style)
+5. Selection automatically proceeds to complete onboarding
+6. Update progress indicator to 100%
+7. Save preference data for development prioritization
 
 ##### Acceptance Criteria:
 
-- [ ] Messaging is personalized based on onboarding responses
-- [ ] RevenueCat paywall integration works correctly
-- [ ] All three user options are functional
+- [ ] Both OS options are displayed clearly
+- [ ] Single selection behavior (radio button style)
+- [ ] Visual feedback on selection
 - [ ] Progress bar shows 100% completion
-- [ ] Smooth transition to main app regardless of choice
+- [ ] Selection automatically completes onboarding flow
+- [ ] OS preference data is saved for analytics
 
 ---
 
@@ -307,9 +309,9 @@ I recommend checking the @.cursorrules for guidelines
 
 1. **App Architecture**
 
-   - [ ] Set up SwiftUI project with iOS 15+ target
-   - [ ] Implement MVVM architecture pattern
-   - [ ] Create navigation coordinator
+   - [x] Set up SwiftUI project with iOS 15+ target
+   - [x] Implement MVVM architecture pattern
+   - [x] Create navigation coordinator
 
 2. **Authentication System**
 
@@ -359,8 +361,8 @@ I recommend checking the @.cursorrules for guidelines
 
 5. **Data Management**
 
-   - [ ] Implement onboarding data storage
-   - [ ] Create user preferences system
+   - [x] Implement onboarding data storage
+   - [x] Create user preferences system
    - [ ] Add account management data layer
 
 6. **Analytics Integration**
@@ -395,15 +397,15 @@ I recommend checking the @.cursorrules for guidelines
 
 ### MVP Success Criteria:
 
-- [ ] Complete onboarding flow with 5 screens
+- [x] Complete onboarding flow with 5 screens
 - [ ] Successful OAuth integration for Threads and Bluesky
 - [ ] Functional text composer with character counting
 - [ ] Multi-platform posting capability
 - [ ] RevenueCat subscription system
 - [ ] Settings and account management
 - [ ] Error handling throughout the app
-- [ ] Smooth transitions between screens
-- [ ] Responsive UI that works on all iPhone sizes
+- [x] Smooth transitions between screens
+- [x] Responsive UI that works on all iPhone sizes
 - [ ] App Store submission ready
 
 ### Performance Requirements:

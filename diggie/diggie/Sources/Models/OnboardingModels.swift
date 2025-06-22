@@ -130,3 +130,18 @@ enum PainPoint: String, CaseIterable, Identifiable {
         }
     }
 }
+
+/// OS support priority options
+enum OSPreference: String, CaseIterable, Identifiable {
+    case iPadOS = "ipados"
+    case macOS = "macos"
+    
+    var id: String { rawValue }
+    
+    var displayName: String {
+        switch self {
+        case .iPadOS: return "iPadOS"
+        case .macOS: return "macOS"
+        }
+    }
+}

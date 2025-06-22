@@ -55,11 +55,12 @@
   - Writing quality - Want better, more engaging content
   - Formatting - Different requirements for each platform
 
-**Screen 5: Pricing**
+**Screen 5: OS Support Priority**
 
-- Show early bird offer: $7.99/month forever (vs $14.99 regular)
-- Personalized benefits based on their answers
-- **Implementation**: RevenueCat paywall integration
+- "Which OS should we support next?"
+- _This helps us prioritize our development roadmap_
+- **Options**: iPadOS, macOS (single selection)
+- Selection automatically completes onboarding
 
 ### 2. Simple Posting Interface
 

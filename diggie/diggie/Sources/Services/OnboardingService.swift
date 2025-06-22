@@ -29,6 +29,9 @@ final class OnboardingService {
     /// Selected pain points from step 4 (max 2)
     var selectedPainPoints: Set<PainPoint> = []
     
+    /// Selected OS preference from step 5
+    var osPreference: OSPreference?
+    
     /// Whether onboarding has been completed
     var hasCompletedOnboarding: Bool = false
     
@@ -46,7 +49,7 @@ final class OnboardingService {
         case 2: return postingFrequency != nil
         case 3: return !selectedContentTypes.isEmpty
         case 4: return !selectedPainPoints.isEmpty
-        case 5: return true // Paywall screen can always proceed
+        case 5: return osPreference != nil
         default: return false
         }
     }
@@ -98,6 +101,12 @@ final class OnboardingService {
         selectedPainPoints = Set(painPoints.prefix(2))
     }
     
+    /// Update OS preference
+    /// - Parameter osPreference: Selected OS preference
+    func updateOSPreference(_ osPreference: OSPreference?) {
+        self.osPreference = osPreference
+    }
+    
     // MARK: - Reset Method
     
     /// Reset all onboarding data
@@ -107,6 +116,7 @@ final class OnboardingService {
         postingFrequency = nil
         selectedContentTypes.removeAll()
         selectedPainPoints.removeAll()
+        osPreference = nil
         hasCompletedOnboarding = false
     }
 }
