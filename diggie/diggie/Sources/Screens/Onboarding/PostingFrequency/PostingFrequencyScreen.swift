@@ -18,15 +18,13 @@ struct PostingFrequencyScreen: View {
             
             // Header
             VStack(alignment: .leading, spacing: 12) {
-                Text("How often do you post?")
+                Text("How often\ndo you post?")
                     .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .frame(maxWidth: 200, alignment: .leading)
+                    .fontWeight(.bold)                    
                 
                 Text("This helps me understand your workflow.")
                     .font(.subheadline)
-                    .foregroundColor(.secondary)
-                    .frame(maxWidth: 300, alignment: .leading)
+                    .foregroundColor(.secondary)                    
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal)
@@ -77,5 +75,11 @@ struct PostingFrequencyScreen: View {
 #Preview {
     let service = OnboardingService()
     let viewModel = PostingFrequencyScreenViewModel(onboardingService: service)
+    
+    // Activate the view model and start animations for preview
+    viewModel.updateActiveState(true)
+    viewModel.startAnimations()
+    
     return PostingFrequencyScreen(viewModel: viewModel)
+        .background(Color.black)
 }

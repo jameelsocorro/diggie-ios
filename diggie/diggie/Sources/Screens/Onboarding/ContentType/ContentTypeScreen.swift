@@ -18,15 +18,13 @@ struct ContentTypeScreen: View {
             
             // Header
             VStack(alignment: .leading, spacing: 12) {
-                Text("What do you create?")
+                Text("What do\nyou create?")
                     .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .frame(maxWidth: 200, alignment: .leading)
+                    .fontWeight(.bold)                    
                 
                 Text("This helps me build the right tools for you.")
                     .font(.subheadline)
-                    .foregroundColor(.secondary)
-                    .frame(maxWidth: 300, alignment: .leading)
+                    .foregroundColor(.secondary)                    
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal)
@@ -92,5 +90,11 @@ struct ContentTypeScreen: View {
 #Preview {
     let service = OnboardingService()
     let viewModel = ContentTypeScreenViewModel(onboardingService: service)
+    
+    // Activate the view model and start animations for preview
+    viewModel.updateActiveState(true)
+    viewModel.startAnimations()
+    
     return ContentTypeScreen(viewModel: viewModel)
+        .background(Color.black)
 }

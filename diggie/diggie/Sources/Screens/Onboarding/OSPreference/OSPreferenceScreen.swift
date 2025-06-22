@@ -18,15 +18,13 @@ struct OSPreferenceScreen: View {
             
             // Header
             VStack(alignment: .leading, spacing: 12) {
-                Text("Which OS should we support next?")
+                Text("Which OS should\nwe support next?")
                     .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .frame(maxWidth: 300, alignment: .leading)
+                    .fontWeight(.bold)                    
                 
                 Text("This helps us prioritize our development roadmap.")
                     .font(.subheadline)
-                    .foregroundColor(.secondary)
-                    .frame(maxWidth: 350, alignment: .leading)
+                    .foregroundColor(.secondary)                    
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal)
@@ -77,5 +75,11 @@ struct OSPreferenceScreen: View {
 #Preview {
     let service = OnboardingService()
     let viewModel = OSPreferenceScreenViewModel(onboardingService: service)
+    
+    // Activate the view model and start animations for preview
+    viewModel.updateActiveState(true)
+    viewModel.startAnimations()
+    
     return OSPreferenceScreen(viewModel: viewModel)
+        .background(Color.black)
 }

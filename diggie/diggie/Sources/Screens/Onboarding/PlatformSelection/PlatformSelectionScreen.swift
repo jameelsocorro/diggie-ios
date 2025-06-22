@@ -18,15 +18,13 @@ struct PlatformSelectionScreen: View {
             
             // Header with slide down + fade animation
             VStack(alignment: .leading, spacing: 12) {
-                Text("Which platforms do you use?")
+                Text("Which platforms\ndo you use?")
                     .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .frame(maxWidth: 300, alignment: .leading)
+                    .fontWeight(.bold)                    
                 
-                Text("This would help me understand which platform integrations to prioritize.")
+                Text("This would help me understand which platform\n integrations to prioritize.")
                     .font(.subheadline)
-                    .foregroundColor(.secondary)
-                    .frame(maxWidth: 300, alignment: .leading)
+                    .foregroundColor(.secondary)                    
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal)
@@ -90,7 +88,11 @@ struct PlatformSelectionScreen: View {
 #Preview {
     let service = OnboardingService()
     let viewModel = PlatformSelectionScreenViewModel(onboardingService: service)
-    viewModel.isActive = true
+    
+    // Activate the view model and start animations for preview
+    viewModel.updateActiveState(true)
     viewModel.startAnimations()
+    
     return PlatformSelectionScreen(viewModel: viewModel)
+        .background(Color.black)
 }

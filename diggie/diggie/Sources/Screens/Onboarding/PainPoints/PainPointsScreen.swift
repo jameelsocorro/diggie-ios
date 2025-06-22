@@ -18,15 +18,15 @@ struct PainPointsScreen: View {
             
             // Header
             VStack(alignment: .leading, spacing: 12) {
-                Text("What's your biggest challenge?")
+                Text("What's your\nbiggest challenge?")
                     .font(.largeTitle)
                     .fontWeight(.bold)
-                    .frame(maxWidth: 350, alignment: .leading)
+                    .fixedSize(horizontal: true, vertical: true)
                 
-                Text("This helps me solve your most important problems first.")
+                Text("This helps me solve your most important\n problems first.")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
-                    .frame(maxWidth: 300, alignment: .leading)
+                    .fixedSize(horizontal: true, vertical: true)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal)
@@ -100,5 +100,11 @@ struct PainPointsScreen: View {
 #Preview {
     let service = OnboardingService()
     let viewModel = PainPointsScreenViewModel(onboardingService: service)
+    
+    // Activate the view model and start animations for preview
+    viewModel.updateActiveState(true)
+    viewModel.startAnimations()
+    
     return PainPointsScreen(viewModel: viewModel)
+        .background(Color.black)
 }
