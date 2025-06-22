@@ -163,12 +163,12 @@ I recommend checking the @.cursorrules for guidelines
 
 ##### Acceptance Criteria:
 
-- [ ] Both OS options are displayed clearly
-- [ ] Single selection behavior (radio button style)
-- [ ] Visual feedback on selection
-- [ ] Progress bar shows 100% completion
-- [ ] Selection automatically completes onboarding flow
-- [ ] OS preference data is saved for analytics
+- [x] Both OS options are displayed clearly
+- [x] Single selection behavior (radio button style)
+- [x] Visual feedback on selection
+- [x] Progress bar shows 100% completion
+- [x] Selection automatically completes onboarding flow
+- [x] OS preference data is saved for analytics
 
 ---
 

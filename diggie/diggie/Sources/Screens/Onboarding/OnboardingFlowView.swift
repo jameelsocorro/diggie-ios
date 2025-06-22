@@ -62,7 +62,7 @@ struct OnboardingFlowView: View {
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: .onboardingCompleted)) { _ in
-            appViewModel.navigateToScreen(.main)
+            appViewModel.navigateToScreen(.accountSetup)
         }
     }
     

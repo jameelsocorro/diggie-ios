@@ -104,7 +104,7 @@ private struct Row {
 
 #Preview {
     FlexWrapLayout(spacing: 8) {
-        ForEach(Platform.allCases) { platform in
+        ForEach(SocialPlatform.allCases) { platform in
             Text(platform.displayName)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)

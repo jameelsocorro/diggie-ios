@@ -41,6 +41,7 @@ final class DiggieAppViewModel {
 enum AppScreen: String, CaseIterable {
     case welcome = "welcome"
     case onboarding = "onboarding"
+    case accountSetup = "accountSetup"
     case main = "main"
     
     var title: String {
@@ -49,6 +50,8 @@ enum AppScreen: String, CaseIterable {
             return "Welcome"
         case .onboarding:
             return "Onboarding"
+        case .accountSetup:
+            return "Account Setup"
         case .main:
             return "Main"
         }
